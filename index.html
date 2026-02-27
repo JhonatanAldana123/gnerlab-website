@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/public/icons/logo GnerLab.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GnerLab | La Nueva Era de Herramientas Digitales</title>
+    <!-- Cargamos estilos puros -->
+    <link rel="stylesheet" href="./src/style.css" />
+    <!-- Cargamos GSAP desde CDN para no requerir Node.js locales -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+
+<body>
+    <!-- Background Textures -->
+    <div id="left-bg-texture"></div>
+    <div id="noise-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Floating Navbar -->
+    <nav id="navbar" class="nav-transparent">
+        <div class="nav-content">
+            <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo" class="nav-logo" />
+            <div class="nav-links">
+                <a href="#hero" class="nav-link">Inicio</a>
+                <a href="#workspace" class="nav-link">Workspace</a>
+                <button id="btn-download-nav" class="btn-primary-small">Obtener Acceso</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-main-logo fade-up" style="margin-bottom: 2rem; max-width: 500px; padding-bottom: 1rem;">
+                <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
+                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1);" />
+            </div>
+            <div class="split-text-container">
+                <h1 class="hero-title">
+                    <span class="line-wrap"><span class="line">LA NUEVA ERA</span></span>
+                    <span class="line-wrap"><span class="line">DE HERRAMIENTAS</span></span>
+                    <span class="line-wrap"><span class="line highlight">DIGITALES</span></span>
+                </h1>
+            </div>
+            <p class="hero-subtitle fade-up">Diseñado para los creadores más exigentes. Un ecosistema de modelado
+                avanzado con la precisión de un instrumento digital de alta gama.</p>
+            <div class="hero-actions fade-up">
+                <button id="btn-download-hero" class="btn-primary">Descargar Ahora</button>
+                <a href="#workspace" class="btn-secondary">Explorar Módulos</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Workspace Grid Section -->
+    <section id="workspace" class="workspace-section">
+        <div class="section-header fade-up-scroll">
+            <span class="section-badge">GNER WORKSPACE 2.0</span>
+            <h2>Módulos de Alto Rendimiento</h2>
+        </div>
+
+        <div class="grid-container">
+
+            <!-- Tool Item: Conteo -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/CONTEO_V2.svg" alt="Conteo V2" />
+                </div>
+                <div class="tool-info">
+                    <h3>Conteo Inteligente</h3>
+                    <p>Auditoría de geometría en tiempo real.</p>
+                </div>
+                <!-- HUD Overlay for Features -->
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.AUDIT.01</span>
+                        <ul>
+                            <li>Precisión 99.9%</li>
+                            <li>Detección de Intersecciones</li>
+                            <li>Reportes Automáticos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Exportación -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/EXPO_V2.svg" alt="Expo V2" />
+                </div>
+                <div class="tool-info">
+                    <h3>Exportación Avanzada</h3>
+                    <p>Traducción de formatos sin pérdida.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.EXPORT.02</span>
+                        <ul>
+                            <li>Multi-hilo (Fast Render)</li>
+                            <li>Preservación de Capas</li>
+                            <li>Lotes por Atributos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Orden -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/ORDEN_V2.svg" alt="Orden V2" />
+                </div>
+                <div class="tool-info">
+                    <h3>Orden Arquitectónico</h3>
+                    <p>Estructuración semántica del modelo.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.STRUCT.03</span>
+                        <ul>
+                            <li>Naming Automático</li>
+                            <li>Jerarquía de Ensamblaje</li>
+                            <li>Limpieza de Bloques</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Repeticiones -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/REP_V2.svg" alt="Rep V2" />
+                </div>
+                <div class="tool-info">
+                    <h3>Repeticiones de una Matriz</h3>
+                    <p>Gestión de bloques instanciados.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.MATRIX.04</span>
+                        <ul>
+                            <li>Instanciación Paramétrica</li>
+                            <li>Optimización de Memoria</li>
+                            <li>Distribución Espacial</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Booleana -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/BOLEANA.svg" alt="Booleana" />
+                </div>
+                <div class="tool-info">
+                    <h3>Booleana Inteligente</h3>
+                    <p>Operaciones de sustracción complejas.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.BOOL.05</span>
+                        <ul>
+                            <li>Sólidos Perfectos</li>
+                            <li>Sin Artefactos</li>
+                            <li>Cálculo Paralelo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Captura -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/CAPTURA.svg" alt="Captura" />
+                </div>
+                <div class="tool-info">
+                    <h3>Captura Avanzada</h3>
+                    <p>Documentación visual de alto rango.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.CAPT.06</span>
+                        <ul>
+                            <li>Renders Viewport 4K</li>
+                            <li>Auto-Composición</li>
+                            <li>Preservación DOF</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Cotas -->
+            <div class="tool-card" data-video="Video_GnerCot.mp4">
+                <div class="tool-icon">
+                    <img src="./public/icons/COTAS.svg" alt="Cotas" />
+                </div>
+                <div class="tool-info">
+                    <h3>Cotas Dinámicas</h3>
+                    <p>Dimensionamiento automático escalable.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.DIMS.07</span>
+                        <ul>
+                            <li>Distancias Exactas</li>
+                            <li>Acotaciones por Layer</li>
+                            <li>Estilos Centralizados</li>
+                        </ul>
+                        <button class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            Ver Funcionamiento
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Intersecciones -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/INTER.svg" alt="Inter" />
+                </div>
+                <div class="tool-info">
+                    <h3>Detección Intersecciones</h3>
+                    <p>Auditoría de colisiones 3D (Clash).</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.INTX.08</span>
+                        <ul>
+                            <li>Clash Detection</li>
+                            <li>Aislación de Errores</li>
+                            <li>Visualización de Nodos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Mapeado -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/MAPEADO.svg" alt="Mapeado" />
+                </div>
+                <div class="tool-info">
+                    <h3>Mapeado UV Automático</h3>
+                    <p>Gestión avanzada de coordenadas UV.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.MAP.09</span>
+                        <ul>
+                            <li>Box Mapping Global</li>
+                            <li>Escala unificada</li>
+                            <li>Ajustes en bloque</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Material -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/MATERIAL.svg" alt="Material" />
+                </div>
+                <div class="tool-info">
+                    <h3>Asignación Materiales</h3>
+                    <p>Pintado de propiedades paramétrico.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.MAT.10</span>
+                        <ul>
+                            <li>Vínculos por Layer</li>
+                            <li>Bibliotecas Externas</li>
+                            <li>Render-ready Nodes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Peso/Masa -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/PESO.svg" alt="Peso" />
+                </div>
+                <div class="tool-info">
+                    <h3>Cálculo de Densidades</h3>
+                    <p>Medición de peso a partir de masa.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.MASS.11</span>
+                        <ul>
+                            <li>Conversión de Volumen</li>
+                            <li>Metadatos Extendidos</li>
+                            <li>Totales Precisos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tool Item: Transformación -->
+            <div class="tool-card" data-video="video-placeholder">
+                <div class="tool-icon">
+                    <img src="./public/icons/TRANSFORM.svg" alt="Transform" />
+                </div>
+                <div class="tool-info">
+                    <h3>Transformación Espacial</h3>
+                    <p>Manipulación coordinada y escalas.</p>
+                </div>
+                <div class="hud-overlay">
+                    <div class="hud-content">
+                        <span class="hud-tech-text">SYS.TRANS.12</span>
+                        <ul>
+                            <li>Alineación Perfecta</li>
+                            <li>Ejes Locales/Globales</li>
+                            <li>Matrices Escalonadas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Unified Video Preview Container (Sticky Background Video) -->
+        <div id="video-preview-container" class="video-preview-container pointer-events-none">
+            <!-- El video cambiará src dinámicamente. Al ser placeholder se usará un gradiente o video de prueba -->
+            <video id="preview-video" loop muted playsinline class="preview-video">
+                <!-- Placeholder source -->
+            </video>
+            <div class="video-overlay-gradient"></div>
+        </div>
+    </section>
+
+    <!-- Start Creating / Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="pricing-header fade-up-scroll">
+            <h2>Start Creating</h2>
+            <p>Elige tu acceso a la nueva era del modelado paramétrico.</p>
+        </div>
+
+        <div class="pricing-grid">
+
+            <!-- Tier 1: Free -->
+            <div class="pricing-card">
+                <div class="card-glow"></div>
+                <div class="pricing-top">
+                    <h3>Free</h3>
+                    <div class="price"><span>$</span>0<span>/mo</span></div>
+                    <p class="pricing-desc">Para probar el ecosistema básico.</p>
+                </div>
+                <ul class="pricing-features">
+                    <li>GnerCot</li>
+                    <li>GnerMap</li>
+                    <li>GnerMat</li>
+                </ul>
+                <button class="btn-secondary w-full">Obtener Gratis</button>
+            </div>
+
+            <!-- Tier 2: Pro -->
+            <div class="pricing-card popular">
+                <div class="card-glow"></div>
+                <div class="popular-badge">MÁS POPULAR</div>
+                <div class="pricing-top">
+                    <h3>Pro</h3>
+                    <div class="price"><span>$</span>0<span>/mo</span></div>
+                    <p class="pricing-desc">Ideal para flujos de trabajo profesionales.</p>
+                </div>
+                <ul class="pricing-features">
+                    <li>GnerCot & GnerMap & GnerMat</li>
+                    <li>GnerAli</li>
+                    <li>Gner Remp</li>
+                    <li>GnerRep</li>
+                </ul>
+                <button class="btn-primary w-full">Acceso Pro</button>
+            </div>
+
+            <!-- Tier 3: Ultra -->
+            <div class="pricing-card">
+                <div class="card-glow"></div>
+                <div class="pricing-top">
+                    <h3>Ultra</h3>
+                    <div class="price"><span>Premium</span></div>
+                    <p class="pricing-desc">El poder absoluto sin limitaciones.</p>
+                </div>
+                <ul class="pricing-features">
+                    <li>Todos los servicios Pro</li>
+                    <li>Asistencia IA Avanzada</li>
+                    <li>Soporte Dedicado</li>
+                </ul>
+                <button class="btn-secondary w-full btn-outline-dynamic">Contactar</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Video Player Modal -->
+    <div id="video-modal" class="modal-overlay hidden">
+        <div class="modal-glass video-glass">
+            <button id="close-video-modal" class="btn-close" style="z-index: 10;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="video-container-inner">
+                <video id="feature-video-player" controls preload="auto">
+                    Tu navegador no soporta videos.
+                </video>
+            </div>
+            <div class="modal-footer">
+                <span class="tech-text">SECURE STREAM // GNERLAB SYSTEMS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal (Cinematic) -->
+    <div id="checkout-modal" class="modal-overlay hidden">
+        <div class="modal-glass">
+            <button id="close-modal" class="btn-close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="modal-header">
+                <img src="./public/icons/logo GnerLab.svg" class="modal-logo" alt="logo" />
+                <h2>Autenticación Requerida</h2>
+                <p>Ingrese la credencial de acceso para descargar GnerLab Setup Oficial.</p>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="access-key">Clave de Acceso</label>
+                    <input type="password" id="access-key" placeholder="••••••••••••" autocomplete="off" />
+                    <div id="error-message" class="error-msg hidden">Acceso denegado. Credencial inválida.</div>
+                </div>
+                <button id="btn-verify-download" class="btn-primary w-full mt-4">Verificar y Descargar</button>
+            </div>
+            <div class="modal-footer">
+                <span class="tech-text">SECURE CONNECTION // ENCRYPTED DOWNLOAD</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="./src/main.js"></script>
+</body>
+
+</html>
