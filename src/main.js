@@ -170,7 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (videoFile && featurePlayer) {
                 // Ruta relativa a GitHub Pages (usa el ./ para evitar ir a la raiz del dominio)
-                featurePlayer.setAttribute('src', './public/videos/' + videoFile);
+                // En Github Pages el subdirectorio "public/" suele causar errores de lectura
+                // Si movemos todo directamente al repositorio o configuramos las rutas correctamente a la raíz donde está el ./
+                featurePlayer.setAttribute('src', './videos/' + videoFile);
 
                 vidModal.classList.add('active');
 
