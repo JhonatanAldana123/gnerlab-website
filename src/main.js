@@ -131,12 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Simular la descarga
             const dlLink = document.createElement('a');
             // La ruta en GitHub Pages buscará en nuestra carpeta local
-            dlLink.href = "./public/downloads/GnerLab_Setup_Oficial.exe";
-            dlLink.download = "GnerLab_Setup_Oficial.exe";
+            dlLink.href = "./public/downloads/GnerLab_Setup_Oficial_V2.rar";
+            dlLink.download = "GnerLab_Setup_Oficial_V2.rar";
             dlLink.click();
 
             // alert opcional para dar feedback en caso de que la descarga sea silenciosa
-            alert("Autenticación exitosa. Iniciando descarga de GnerLab_Setup_Oficial.exe...");
+            alert("Autenticación exitosa. Iniciando descarga de GnerLab_Setup_Oficial_V2.rar...");
 
             // Reset Modal
             modal.classList.remove('active');
