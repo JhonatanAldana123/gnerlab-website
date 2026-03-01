@@ -281,7 +281,7 @@ nav {
     align-items: center;
     justify-content: space-between;
     width: 90%;
-    max-width: 1200px;
+    max-width: 1440px;
     transition: all var(--transition-smooth);
     padding: 10px 20px;
 }
@@ -341,7 +341,7 @@ nav {
 }
 
 .hero-content {
-    max-width: 1200px;
+    max-width: 1440px;
     width: 100%;
     margin: 0 auto;
 }
@@ -390,7 +390,7 @@ nav {
 }
 
 .section-header {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto var(--spacing-xl) auto;
 }
 
@@ -407,9 +407,9 @@ nav {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-md);
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+    max-width: 1440px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
@@ -424,7 +424,8 @@ nav {
     position: relative;
     overflow: hidden;
     transition: all var(--transition-smooth);
-    height: 300px;
+    min-height: 380px;
+    height: auto;
     display: flex;
     flex-direction: column;
 }
