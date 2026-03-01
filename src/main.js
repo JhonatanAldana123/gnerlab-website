@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Simular la descarga
             const dlLink = document.createElement('a');
-            // La ruta real del instalador relativa al HTML
-            dlLink.href = "../_BUILD_TOOLS/Output/GnerLab_Setup_Oficial.exe";
+            // La ruta en GitHub Pages buscará en nuestra carpeta local
+            dlLink.href = "./public/downloads/GnerLab_Setup_Oficial.exe";
             dlLink.download = "GnerLab_Setup_Oficial.exe";
             dlLink.click();
 
@@ -169,16 +169,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const videoFile = card.getAttribute('data-video');
 
             if (videoFile && featurePlayer) {
-                // Ruta simplificada compatible con local file://
-                featurePlayer.setAttribute('src', 'public/videos/' + videoFile);
+                // Ruta relativa a GitHub Pages (usa el ./ para evitar ir a la raiz del dominio)
+                featurePlayer.setAttribute('src', './public/videos/' + videoFile);
 
                 vidModal.classList.add('active');
 
-                // Mostrar siempre controles cuando se abra localmente 
+                // Mostrar controles y dar play estricto en la nube
                 featurePlayer.controls = true;
 
                 setTimeout(() => {
-                    featurePlayer.play().catch(e => console.log("Requiere play manual loco", e));
+                    featurePlayer.play().catch(e => console.log("Se requiere play manual", e));
                 }, 100);
             }
         });
