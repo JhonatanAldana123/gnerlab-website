@@ -420,6 +420,7 @@ nav {
     background: rgba(10, 10, 10, 0.6);
     backdrop-filter: blur(10px);
     border: 1px solid var(--color-glass);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     position: relative;
     overflow: hidden;
