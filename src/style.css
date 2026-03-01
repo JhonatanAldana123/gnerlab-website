@@ -431,11 +431,14 @@ nav {
 
 .tool-icon {
     margin-bottom: auto;
+    width: 100%;
 }
 
 .tool-icon img {
-    width: 48px;
-    height: 48px;
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
     filter: drop-shadow(0 0 10px rgba(255, 0, 55, 0));
     transition: filter var(--transition-smooth);
 }
@@ -443,6 +446,7 @@ nav {
 .tool-card h3 {
     margin-bottom: var(--spacing-sm);
     transition: color var(--transition-fast);
+    text-transform: none;
 }
 
 .tool-card p {
@@ -487,6 +491,7 @@ nav {
 .tool-card:hover .hud-overlay {
     opacity: 1;
     transform: translateY(0);
+    pointer-events: auto;
 }
 
 .hud-tech-text {

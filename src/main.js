@@ -159,40 +159,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const vidModal = document.getElementById('video-modal');
     const btnCloseVid = document.getElementById('close-video-modal');
     const featurePlayer = document.getElementById('feature-video-player');
-    const playBtns = document.querySelectorAll('.btn-play-video');
+    // Funsiones globales de Video para evitar problemas con addEventListener
+    window.openVideoModal = function (videoId) {
+        if (!videoId || videoId === "video-placeholder") return;
+        const vidModal = document.getElementById('video-modal');
+        const featurePlayer = document.getElementById('feature-video-player');
 
-    playBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Buscar la tarjeta padre que tiene el atributo data-video
-            const card = e.target.closest('.tool-card');
-            const videoFile = card.getAttribute('data-video');
-
-            if (videoFile && featurePlayer && videoFile !== "video-placeholder") {
-                // Inyectar URL de Youtube con modo Autoplay activado
-                featurePlayer.setAttribute('src', `https://www.youtube.com/embed/${videoFile}?autoplay=1&rel=0`);
-
-                vidModal.classList.add('active');
-            }
-        });
-    });
-
-    // Cerrar y detener el video
-    const closeVideo = () => {
-        vidModal.classList.remove('active');
-        if (featurePlayer) {
-            // Limpiar src para detener la reproducción de YouTube
-            featurePlayer.setAttribute('src', '');
+        if (vidModal && featurePlayer) {
+            featurePlayer.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+            vidModal.classList.add('active');
         }
     };
 
-    if (btnCloseVid) btnCloseVid.addEventListener('click', closeVideo);
-
-    if (vidModal) {
-        vidModal.addEventListener('click', (e) => {
-            if (e.target === vidModal) {
-                closeVideo();
-            }
-        });
-    }
+    // Cerrar y detener el video (AHORA ES GLOBAL Y LLAMADO DESDE HTML DIRECTAMENTE Y DESDE JS)
+    window.closeVideoModal = () => {
+        const vidModal = document.getElementById('video-modal');
+        const featurePlayer = document.getElementById('feature-video-player');
+        if (vidModal) {
+            vidModal.classList.remove('active');
+        }
+        if (featurePlayer) {
+            featurePlayer.setAttribute('src', '');
+        }
+    };
 });
