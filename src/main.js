@@ -168,20 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const card = e.target.closest('.tool-card');
             const videoFile = card.getAttribute('data-video');
 
-            if (videoFile && featurePlayer) {
-                // Ruta relativa a GitHub Pages (usa el ./ para evitar ir a la raiz del dominio)
-                // En Github Pages el subdirectorio "public/" suele causar errores de lectura
-                // Si movemos todo directamente al repositorio o configuramos las rutas correctamente a la raíz donde está el ./
-                featurePlayer.setAttribute('src', './videos/' + videoFile);
+            if (videoFile && featurePlayer && videoFile !== "video-placeholder") {
+                // Inyectar URL de Youtube con modo Autoplay activado
+                featurePlayer.setAttribute('src', `https://www.youtube.com/embed/${videoFile}?autoplay=1&rel=0`);
 
                 vidModal.classList.add('active');
-
-                // Mostrar controles y dar play estricto en la nube
-                featurePlayer.controls = true;
-
-                setTimeout(() => {
-                    featurePlayer.play().catch(e => console.log("Se requiere play manual", e));
-                }, 100);
             }
         });
     });
@@ -190,9 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeVideo = () => {
         vidModal.classList.remove('active');
         if (featurePlayer) {
-            featurePlayer.pause();
-            featurePlayer.currentTime = 0;
-            // featurePlayer.src = ""; // opcional limpiar
+            // Limpiar src para detener la reproducción de YouTube
+            featurePlayer.setAttribute('src', '');
         }
     };
 

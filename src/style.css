@@ -889,7 +889,8 @@ nav {
 
 #feature-video-player {
     width: 100%;
-    height: auto;
+    aspect-ratio: 16 / 9;
+    border: none;
     display: block;
     outline: none;
 }
