@@ -558,11 +558,11 @@
             </button>
             <div class="video-container-inner" style="width: 100%; height: 60vh; position: relative;">
                 <model-viewer id="main-3d-viewer" src="" ar ar-modes="webxr scene-viewer quick-look" camera-controls
-                    auto-rotate shadow-intensity="1" environment-image="neutral"
+                    auto-rotate shadow-intensity="1" environment-image="neutral" interaction-prompt="auto"
                     style="width: 100%; height: 100%; background-color: transparent;" alt="Modelo 3D">
 
-                    <button slot="ar-button" class="btn-primary"
-                        style="position: absolute; bottom: 20px; right: 20px; z-index: 10;">
+                    <button slot="ar-button"
+                        style="background-color: var(--color-primary); color: white; border: none; border-radius: 8px; padding: 12px 24px; position: absolute; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Gilroy', sans-serif; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 0, 55, 0.4); text-transform: uppercase;">
                         Proyectar en AR (Celular)
                     </button>
                 </model-viewer>
