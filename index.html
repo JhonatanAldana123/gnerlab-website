@@ -557,15 +557,37 @@
                 </svg>
             </button>
             <div class="video-container-inner" style="width: 100%; height: 60vh; position: relative;">
-                <model-viewer id="main-3d-viewer" src="" ar ar-modes="webxr scene-viewer quick-look" camera-controls
-                    auto-rotate shadow-intensity="1" environment-image="neutral" interaction-prompt="auto"
-                    style="width: 100%; height: 100%; background-color: transparent;" alt="Modelo 3D">
 
-                    <button slot="ar-button"
-                        style="background-color: var(--color-primary); color: white; border: none; border-radius: 8px; padding: 12px 24px; position: absolute; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Gilroy', sans-serif; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 0, 55, 0.4); text-transform: uppercase;">
-                        Proyectar en AR (Celular)
-                    </button>
+                <!-- Modelo 3D Interactivo (Rotable por dedo/mouse) -->
+                <model-viewer id="main-3d-viewer" src="" camera-controls auto-rotate shadow-intensity="1"
+                    environment-image="neutral" interaction-prompt="auto"
+                    style="width: 100%; height: 100%; background-color: transparent;" alt="Modelo 3D">
                 </model-viewer>
+
+            </div>
+
+            <!-- Panel Inferior del Modal: Marcador AR Universal -->
+            <div
+                style="width: 100%; background: rgba(5,5,5,0.8); border-top: 1px solid var(--color-glass-strong); padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <img src="./public/ar/hiro_marker.png" alt="AR Marker"
+                        style="width: 80px; height: 80px; border: 2px solid white; border-radius: 4px;" />
+                    <div>
+                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.2rem;">AR Universal Integrado</h4>
+                        <p style="color: var(--color-text-muted); font-size: 0.85rem; max-width: 300px;">
+                            <strong>Si estás en PC:</strong> Mantén esta pantalla abierta y presiona el botón rojo desde
+                            tu <b>celular</b> para proyectar la pieza sobre este recuadro blanco.<br />
+                            <strong>Si estás en Celular:</strong> Presiona el botón rojo.
+                        </p>
+                    </div>
+                </div>
+
+                <a href="#hero" id="btn-universal-ar" class="btn-primary"
+                    style="text-decoration: none; padding: 14px 28px; font-weight: bold; border-radius: 8px;">
+                    Ojo AR (Cámara)
+                </a>
+
             </div>
             <div class="modal-footer" style="width: 100%; text-align: center; margin-top: 1rem;">
                 <span class="tech-text">GNERLAB 3D VIEWER // NATIVE AR</span>

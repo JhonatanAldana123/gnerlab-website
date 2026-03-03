@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>GnerLab AR Universal</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #050505;
+        }
+
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #050505;
+            color: #ff0037;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-family: monospace;
+        }
+
+        .back-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff0037;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: sans-serif;
+            font-weight: bold;
+            z-index: 10000;
+        }
+    </style>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+    <div id="loader" class="loading-screen">
+        <h2>GNERLAB AR LINK</h2>
+        <p>Buscando marcador ("HIRO")...</p>
+        <p style="font-size: 10px; color: #888;">Mantén presionado el marcador "hiro" en la pantalla de la web para
+            proyectar el 3D aquí.</p>
+    </div>
+
+    <!-- Boton para regresar a la web -->
+    <button class="back-btn" onclick="window.history.back()">VOLVER A GNERLAB</button>
+
+    <a-scene embedded
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        renderer="antialias: true; alpha: true">
+        <a-assets>
+            <!-- El modelo GLB centralizado -->
+            <a-asset-item id="cotas-model" src="../models/GnerCot3D.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Utilizamos el marcador estándar HIRO que es el más fácil de reconocer -->
+        <a-marker preset="hiro" id="marker-hiro" emitevents="true">
+            <!-- El objeto que flota al detectar el marcador, ajustamos escala a 0.5 -->
+            <a-entity gltf-model="#cotas-model" scale="0.5 0.5 0.5" position="0 0.5 0" rotation="0 0 0"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+            </a-entity>
+        </a-marker>
+
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+        // Ocultar Loader cuando inicie AR.js y la camara encienda
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+            }, 3000);
+        });
+
+        const marker = document.getElementById('marker-hiro');
+        marker.addEventListener('markerFound', () => {
+            console.log("¡Marcador GnerLab encontrado!");
+        });
+    </script>
+</body>
+
+</html>

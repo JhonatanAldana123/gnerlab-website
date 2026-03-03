@@ -190,9 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modelUrl) return;
         const arModal = document.getElementById('ar-modal');
         const viewer = document.getElementById('main-3d-viewer');
+        const btnUniversal = document.getElementById('btn-universal-ar');
 
         if (arModal && viewer) {
             viewer.setAttribute('src', modelUrl);
+            if (btnUniversal) {
+                // Ensure link points to our new universal AR page
+                btnUniversal.href = "./public/ar/index.html";
+                // Optionally pass model data via localStorage or QueryString
+                localStorage.setItem('gnerlabCurrentARModel', modelUrl);
+            }
             arModal.classList.add('active');
         }
     };
