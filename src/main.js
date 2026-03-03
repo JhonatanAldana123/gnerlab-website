@@ -182,4 +182,29 @@ document.addEventListener('DOMContentLoaded', () => {
             featurePlayer.setAttribute('src', '');
         }
     };
+
+    /* =========================================================================
+       3D AR MODAL LOGIC (COTAS Y OTROS)
+       ========================================================================= */
+    window.open3DModal = function (modelUrl) {
+        if (!modelUrl) return;
+        const arModal = document.getElementById('ar-modal');
+        const viewer = document.getElementById('main-3d-viewer');
+
+        if (arModal && viewer) {
+            viewer.setAttribute('src', modelUrl);
+            arModal.classList.add('active');
+        }
+    };
+
+    window.close3DModal = () => {
+        const arModal = document.getElementById('ar-modal');
+        const viewer = document.getElementById('main-3d-viewer');
+        if (arModal) {
+            arModal.classList.remove('active');
+        }
+        if (viewer) {
+            viewer.setAttribute('src', '');
+        }
+    };
 });

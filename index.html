@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="./src/style.css" />
     <!-- Cargamos GSAP desde CDN para no requerir Node.js locales -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- Librería Nativa WebAR (Google Model Viewer) -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 
 <body>
@@ -90,6 +93,17 @@
                                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
                             </svg>
                             Ver Funcionamiento
+                        </button>
+                        <button onclick="window.open3DModal('./public/models/GnerCot3D.glb')"
+                            class="btn-secondary w-full mt-2"
+                            style="padding: 0.5rem; justify-content: center; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                            </svg>
+                            Explorar 3D / AR
                         </button>
                     </div>
                 </div>
@@ -529,6 +543,32 @@
             </div>
             <div class="modal-footer">
                 <span class="tech-text">SECURE CONNECTION // ENCRYPTED DOWNLOAD</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D AR Modal -->
+    <div id="ar-modal" class="modal-overlay" onclick="if(event.target === this) window.close3DModal()">
+        <div class="modal-glass video-glass"
+            style="display: flex; flex-direction: column; align-items: center; max-width: 800px;">
+            <button id="close-ar-modal" class="btn-close" style="z-index: 10;" onclick="window.close3DModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+            </button>
+            <div class="video-container-inner" style="width: 100%; height: 60vh; position: relative;">
+                <model-viewer id="main-3d-viewer" src="" ar ar-modes="webxr scene-viewer quick-look" camera-controls
+                    auto-rotate shadow-intensity="1" environment-image="neutral"
+                    style="width: 100%; height: 100%; background-color: transparent;" alt="Modelo 3D">
+
+                    <button slot="ar-button" class="btn-primary"
+                        style="position: absolute; bottom: 20px; right: 20px; z-index: 10;">
+                        Proyectar en AR (Celular)
+                    </button>
+                </model-viewer>
+            </div>
+            <div class="modal-footer" style="width: 100%; text-align: center; margin-top: 1rem;">
+                <span class="tech-text">GNERLAB 3D VIEWER // NATIVE AR</span>
             </div>
         </div>
     </div>
