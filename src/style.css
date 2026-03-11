@@ -102,7 +102,7 @@ body {
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
-    transition: transform 0.15s ease-out, opacity 0.15s ease-out, background-color 0.15s ease;
+    transition: scale 0.15s ease-out, background-color 0.15s ease, opacity 0.15s ease-out;
 }
 
 .cursor-dot {
@@ -117,11 +117,16 @@ body {
     border: 1px solid var(--color-glass-strong);
 }
 
-/* Cursor interactivo (hover) */
+/* Cursor interactivo (hover): Convergencia (0 Separación) */
 .cursor-hover .cursor-outline {
-    transform: translate(-50%, -50%) scale(1.5);
-    border-color: var(--color-primary);
-    background-color: rgba(255, 0, 55, 0.1);
+    scale: 0.2;
+    opacity: 0;
+}
+
+.cursor-hover .cursor-dot {
+    scale: 2.5;
+    background-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(255, 0, 55, 0.4);
 }
 
 /* =========================================================================
@@ -147,16 +152,24 @@ body {
     -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 90%);
 }
 
-#noise-overlay {
+/* Fondo Dinámico: Éter Fluid / Glowing Space (Reemplaza al antiguo noise granulado) */
+#fluid-space-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 9999;
-    opacity: 0.04;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 0; /* Lo empujamos detrás de todo el contenido */
+    background: 
+        radial-gradient(130vh circle at 0% 0%, rgba(255, 0, 55, 0.20) 0%, transparent 60%),
+        radial-gradient(150vh circle at 100% 100%, rgba(180, 0, 40, 0.15) 0%, transparent 70%);
+    animation: etherPlasma 20s ease-in-out infinite alternate;
+}
+
+@keyframes etherPlasma {
+    0% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.1) translate(-4vw, -5vh); }
+    100% { transform: scale(1.05) translate(4vw, 5vh); }
 }
 
 /* =========================================================================
@@ -173,7 +186,7 @@ h4 {
 }
 
 h1 {
-    font-size: clamp(3rem, 6vw, 6rem);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
 }
 
 h2 {
@@ -334,16 +347,59 @@ nav {
 .hero-section {
     min-height: 100vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;  /* Center vertically */
+    justify-content: center; /* Center horizontally */
     padding: 10vh 5% 10vh 5%;
     position: relative;
     z-index: 10;
+    overflow: hidden; /* Contains background video */
+}
+
+/* Cinematic Background Video */
+.hero-video-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: saturate(0) contrast(1.2) brightness(0.8);
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    /* Fusión bestial: Suave en el centro, oscuro profundo en los bordes y hacia ABAJO */
+    background: 
+        radial-gradient(circle at center, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.9) 70%),
+        linear-gradient(to bottom, transparent 0%, transparent 60%, var(--color-bg) 100%);
+    z-index: 1;
+}
+
+.hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-size: 50px 50px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
+    mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
 }
 
 .hero-content {
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 /* Para animar líneas de texto con GSAP */
@@ -363,8 +419,16 @@ nav {
 
 .highlight {
     color: transparent;
-    -webkit-text-stroke: 1px var(--color-primary);
-    text-shadow: 0 0 20px rgba(255, 0, 55, 0.4);
+    background: linear-gradient(90deg, #FFFFFF 0%, var(--color-primary) 50%, #FFFFFF 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShine 4s linear infinite;
+    text-shadow: 0 0 30px rgba(255, 0, 55, 0.6);
+}
+
+@keyframes textShine {
+    to { background-position: 200% center; }
 }
 
 .hero-subtitle {
@@ -379,19 +443,94 @@ nav {
     gap: var(--spacing-md);
 }
 
-/* =========================================================================
-   WORKSPACE GRID & HUD OVERLAY
-   ========================================================================= */
+/* Transiciones de Unión Global (Ocultan totalmente cualquier posible corte recto) */
+.transition-fade {
+    position: absolute;
+    top: -30vh; /* Sube la transición para fusionarse directamente con el final del Hero */
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(to bottom, transparent 0%, var(--color-bg) 45%, var(--color-bg) 55%, transparent 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.transition-fade-bottom {
+    position: absolute;
+    bottom: -30vh;
+    left: 0;
+    width: 100%;
+    height: 60vh;
+    background: linear-gradient(to top, transparent 0%, var(--color-bg) 45%, var(--color-bg) 55%, transparent 100%);
+    z-index: 8; /* Mayor z-index para que cubra elementos del final de la sección */
+    pointer-events: none;
+}
+
 .workspace-section {
     position: relative;
     padding: 15vh 5%;
     min-height: 100vh;
     z-index: 10;
+    /* Inicia y termina transparente para dejar fluir el oscurecimiento natural de la transición y las auras */
+    background: linear-gradient(to bottom, transparent 0%, transparent 15vh, var(--color-bg) 40vh, var(--color-bg) 85%, transparent 100%);
+}
+
+/* =========================================================================
+   WORKSPACE GRID & HUD OVERLAY
+   ========================================================================= */
+
+/* Ambient Blur Particles - INTENSIDAD EXTREMA - CONTENIDAS GEOMÉTRICAMENTE */
+.ambient-halos {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    /* MAGIA PURA: Esta mascarilla recorta orgánicamente las auras rojas con muchísima suavidad */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
+.halo-top,
+.halo-bottom {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 1;
+    pointer-events: none;
+    animation: floatAmbient 5s infinite alternate ease-in-out;
+}
+
+.halo-top {
+    top: -5%;
+    left: -15vw;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(255, 0, 55, 0.60) 0%, transparent 70%);
+}
+
+.halo-bottom {
+    bottom: -10%;
+    right: -10vw;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(200, 0, 30, 0.80) 0%, transparent 70%);
+    animation-duration: 8s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes floatAmbient {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(15vw, 10vh) scale(1.1); }
+    100% { transform: translate(-5vw, 20vh) scale(1); }
 }
 
 .section-header {
     max-width: 1440px;
     margin: 0 auto var(--spacing-xl) auto;
+    position: relative;
+    z-index: 2;
 }
 
 .section-badge {
@@ -424,11 +563,55 @@ nav {
     padding: var(--spacing-lg);
     position: relative;
     overflow: hidden;
-    transition: all var(--transition-smooth);
+    transition: transform 0.1s linear, background var(--transition-smooth), border-color var(--transition-smooth);
     min-height: 380px;
     height: auto;
     display: flex;
     flex-direction: column;
+    transform-style: preserve-3d;
+}
+
+/* EFECTO SPOTLIGHT BORDER: Sigue al cursor internamente */
+.tool-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px; /* Grosor del borde brillante */
+    background: radial-gradient(
+        600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        var(--color-primary),
+        transparent 40%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+/* EFECTO SPOTLIGHT INNER: Halo interno que ilumina la tarjeta */
+.tool-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        500px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(255, 0, 55, 0.08),
+        transparent 40%
+    );
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+.tool-card:hover::before,
+.tool-card:hover::after {
+    opacity: 1;
 }
 
 .tool-icon {
@@ -459,8 +642,7 @@ nav {
 /* Hover Effects */
 .tool-card:hover {
     background: rgba(20, 20, 20, 0.8);
-    border-color: var(--color-primary);
-    transform: translateY(-5px);
+    border-color: transparent; /* Oculta el borde base para dejar lucir al spotlight */
 }
 
 .tool-card:hover .tool-icon img {
@@ -568,8 +750,8 @@ nav {
 .pricing-section {
     position: relative;
     padding: 15vh 5%;
-    z-index: 10;
-    background: radial-gradient(circle at top, rgba(20, 20, 20, 0.8) 0%, var(--color-bg) 70%);
+    z-index: 5; /* Menor que workspace-section para que la transición caiga por encima */
+    background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.6) 0%, transparent 80%);
 }
 
 .pricing-header {
@@ -782,6 +964,7 @@ nav {
     max-width: 480px;
     padding: 3rem 2rem;
     position: relative;
+    border-radius: var(--radius-lg); /* Esquinas curvas para todas las ventanas */
     transform: translateY(20px) scale(0.95);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -792,23 +975,37 @@ nav {
 
 .btn-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 16px;
+    right: 16px;
     background: transparent;
     color: var(--color-text-muted);
     border: none;
     cursor: pointer;
+    z-index: 50;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
 }
 
 .btn-close:hover {
     color: var(--color-primary);
     transform: rotate(90deg);
+    background: rgba(255, 0, 55, 0.1);
+}
+
+.modal-header {
+    padding-right: 40px; /* Previene que textos o logos toquen la X de cerrar */
 }
 
 .modal-logo {
     height: 32px;
+    max-width: 100%;
     margin-bottom: 24px;
     filter: brightness(0) invert(1);
+    display: block;
 }
 
 .modal-header h2 {
@@ -925,4 +1122,244 @@ nav {
     .grid-container {
         grid-template-columns: 1fr;
     }
+}
+
+/* =========================================================================
+   LENIS SMOOTH SCROLLING CORE STYLES
+   ========================================================================= */
+html.lenis, html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* =========================================================================
+   TERMINAL MODAL (BIOMETRIC CHECKOUT)
+   ========================================================================= */
+.terminal-modal {
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid transparent; /* Ocultamos el estático para dejar brillar el halo interactivo */
+    box-shadow: 0 0 40px rgba(255, 0, 55, 0.15), inset 0 0 20px rgba(255, 0, 55, 0.1);
+    border-radius: var(--radius-lg); /* Esquinas curvas premium */
+    position: relative;
+    /* overflow: hidden; NO, porque recorta las sombras, usaremos inherit */
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear, background var(--transition-smooth), border-color var(--transition-smooth);
+}
+
+/* EFECTO SPOTLIGHT BORDER: Sigue al cursor internamente */
+.terminal-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+        800px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        var(--color-primary),
+        transparent 40%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity var(--transition-smooth);
+}
+
+/* EFECTO SPOTLIGHT INNER: Halo interno que ilumina la terminal */
+.terminal-modal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+        rgba(255, 0, 55, 0.10),
+        transparent 40%
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+/* Proteger el contenido por encima del halo interior */
+.terminal-modal .modal-header,
+.terminal-modal .modal-body,
+.terminal-modal .modal-footer {
+    position: relative;
+    z-index: 11;
+}
+
+.terminal-modal .btn-close {
+    position: absolute; /* Restauramos su absolute para que ruede a la derecha */
+    z-index: 11;
+}
+
+.btn-close svg {
+    width: 32px;
+    height: 32px;
+}
+
+.terminal-title {
+    color: var(--color-primary);
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
+.terminal-body {
+    background: #020202;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CRT Scanlines Overlay */
+.terminal-body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.terminal-output {
+    position: relative;
+    z-index: 3;
+    flex-grow: 1;
+}
+
+.terminal-output p {
+    color: #0f0; /* Fósforo verde terminal */
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    font-family: monospace;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    opacity: 0; /* Oculto por defecto para animación typewriter */
+}
+
+.text-warning {
+    color: var(--color-primary) !important;
+    text-shadow: 0 0 5px rgba(255, 0, 55, 0.5) !important;
+}
+
+.terminal-input-group {
+    position: relative;
+    z-index: 3;
+}
+
+.terminal-input {
+    background: rgba(255,255,255,0.05) !important;
+    color: #0f0 !important;
+    border: 1px solid rgba(0,255,0,0.3) !important;
+    font-family: monospace !important;
+    border-radius: 0 !important;
+    padding: 12px 15px !important;
+    letter-spacing: 2px;
+    width: 100%;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    transition: all 0.2s;
+}
+
+.terminal-input:focus {
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    box-shadow: 0 0 15px rgba(255,0,55,0.3) !important;
+    text-shadow: 0 0 5px rgba(255, 0, 55, 0.5) !important;
+    outline: none;
+}
+
+.terminal-error {
+    color: var(--color-primary);
+    margin-top: 10px;
+    font-family: monospace;
+    text-shadow: 0 0 5px rgba(255, 0, 55, 0.5);
+}
+
+.terminal-btn {
+    border-radius: 0;
+    font-family: monospace !important;
+    letter-spacing: 3px;
+    font-weight: bold;
+    position: relative;
+    z-index: 3;
+    border: 1px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    transition: all 0.2s;
+}
+
+.terminal-btn:hover {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 0 15px var(--color-primary);
+}
+
+/* Glitch Animations */
+.glitch-active {
+    animation: glitchAnim 0.15s cubic-bezier(.25, .46, .45, .94) both infinite;
+    filter: drop-shadow(0 0 10px #0f0) invert(10%);
+}
+
+.glitch-active-error {
+    animation: glitchAnim 0.1s cubic-bezier(.25, .46, .45, .94) both infinite;
+    filter: drop-shadow(0 0 20px var(--color-primary));
+}
+
+@keyframes glitchAnim {
+    0% { transform: translate(0) }
+    20% { transform: translate(-4px, 4px) }
+    40% { transform: translate(-4px, -4px) }
+    60% { transform: translate(4px, 4px) }
+    80% { transform: translate(4px, -4px) }
+    100% { transform: translate(0) }
+}
+
+/* Typewriter CSS effect */
+@keyframes typeIn {
+    0% { width: 0; opacity: 1; }
+    1% { opacity: 1; }
+    100% { width: 100%; opacity: 1; }
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid transparent;
+    width: 0;
+    animation: typeIn 0.8s steps(40, end) forwards;
+}
+
+.delay-1 { animation-delay: 1s; }
+.delay-2 { animation-delay: 2s; }
+.fade-in-delay-4 { opacity: 0; animation: fadeIn 0.5s 2.5s forwards; }
+
+@keyframes fadeIn {
+    to { opacity: 1; }
 }

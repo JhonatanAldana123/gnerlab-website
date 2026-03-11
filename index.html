@@ -10,15 +10,14 @@
     <link rel="stylesheet" href="./src/style.css" />
     <!-- Cargamos GSAP desde CDN para no requerir Node.js locales -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
-    <!-- Librería Nativa WebAR (Google Model Viewer) -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 
 <body>
     <!-- Background Textures -->
     <div id="left-bg-texture"></div>
-    <div id="noise-overlay"></div>
+    <div id="fluid-space-overlay"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -38,32 +37,56 @@
 
     <!-- Hero Section -->
     <header id="hero" class="hero-section">
-        <div class="hero-content">
-            <div class="hero-main-logo fade-up" style="margin-bottom: 2rem; max-width: 500px; padding-bottom: 1rem;">
-                <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
-                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1);" />
+        <!-- Cinematic Video Background (Google Flow Style) -->
+        <div class="hero-video-wrapper">
+            <video id="hero-video" autoplay loop muted playsinline>
+                <!-- VIDEO DE PRUEBA: Luego podrás cambiarlo por uno local en tu carpeta ./public/videos -->
+                <source src="./public/videos/hero-bg.mp4.mp4" type="video/mp4" />
+            </video>
+            <div class="hero-video-overlay"></div>
+            <!-- Malla paramétrica opcional de CSS pura -->
+            <div class="hero-grid-overlay"></div> 
+        </div>
+
+        <div class="hero-content" style="text-align: center;">
+            <div class="hero-main-logo fade-up" style="margin-top: 10vh; margin-bottom: 10vh; max-width: 600px; padding-bottom: 1rem; margin-inline: auto; position: relative; z-index: 2;">
+                <!-- Id 'massive-logo' necesario para la animación SCROLL de GSAP -->
+                <img id="massive-logo" src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
+                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1) drop-shadow(0 0 40px rgba(255,0,55,0.2));" />
             </div>
-            <div class="split-text-container">
-                <h1 class="hero-title">
-                    <span class="line-wrap"><span class="line">LA NUEVA ERA</span></span>
-                    <span class="line-wrap"><span class="line">DE HERRAMIENTAS</span></span>
-                    <span class="line-wrap"><span class="line highlight">DIGITALES</span></span>
-                </h1>
-            </div>
-            <p class="hero-subtitle fade-up">Diseñado para los creadores más exigentes. Un ecosistema de modelado
-                avanzado con la precisión de un instrumento digital de alta gama.</p>
-            <div class="hero-actions fade-up">
-                <button id="btn-download-hero" class="btn-primary">Descargar Ahora</button>
-                <a href="#workspace" class="btn-secondary">Explorar Módulos</a>
+            
+            <div id="hero-texts" style="position: relative; z-index: 2;">
+                <div class="split-text-container">
+                    <h1 class="hero-title">
+                        <span class="line-wrap"><span class="line">DISEÑO PARAMÉTRICO</span></span>
+                        <span class="line-wrap"><span class="line">SIN FRICCIÓN. LA EVOLUCIÓN</span></span>
+                        <span class="line-wrap"><span class="line highlight">INTELIGENTE DEL 3D.</span></span>
+                    </h1>
+                </div>
+                <p class="hero-subtitle fade-up" style="margin-inline: auto; max-width: 800px;">Diseñado para los creadores más exigentes. Fusiona el rigor técnico con el desarrollo asistido por IA. Elimina la barrera técnica entre tu visión y la pantalla, delegando los cálculos matemáticos repetitivos a nuestros algoritmos. Concéntrate en la innovación de tus proyectos mientras el software se encarga de la fricción.</p>
             </div>
         </div>
     </header>
 
     <!-- Workspace Grid Section -->
     <section id="workspace" class="workspace-section">
+        
+        <!-- Contenedor Enmascarado de Auras (Dinamismo y Fusión Pura) -->
+        <div class="ambient-halos">
+            <div class="halo-top"></div>
+            <div class="halo-bottom"></div>
+        </div>
+
+        <!-- Transición Cinemática Superior (Efecto de Desenfoque y Mezcla al Hero) -->
+        <div class="transition-fade"></div>
+
         <div class="section-header fade-up-scroll">
             <span class="section-badge">GNER WORKSPACE 2.0</span>
             <h2>Módulos de Alto Rendimiento</h2>
+            <div class="hero-actions" style="margin-top: 2rem;">
+                <button id="btn-download-hero" class="btn-primary">Descargar Ahora</button>
+                <a href="#workspace" class="btn-secondary">Explorar Módulos</a>
+            </div>
         </div>
 
         <div class="grid-container">
@@ -94,17 +117,6 @@
                             </svg>
                             Ver Funcionamiento
                         </button>
-                        <button onclick="window.open3DModal('./public/models/GnerCot3D.glb')"
-                            class="btn-secondary w-full mt-2"
-                            style="padding: 0.5rem; justify-content: center; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                                </path>
-                            </svg>
-                            Explorar 3D / AR
-                        </button>
                     </div>
                 </div>
             </div>
@@ -115,7 +127,7 @@
                     <img src="./public/icons/CONTEO_V2.svg" alt="Conteo V2" />
                 </div>
                 <div class="tool-info">
-                    <h3>GnerCont Conteo Inteligente</h3>
+                    <h3>GnerCont - Conteo Inteligente</h3>
                     <p>Auditoría de geometría en tiempo real.</p>
                 </div>
                 <!-- HUD Overlay for Features -->
@@ -145,7 +157,7 @@
                     <img src="./public/icons/PESO.svg" alt="Peso" />
                 </div>
                 <div class="tool-info">
-                    <h3>GnerPer Cálculo de Densidades</h3>
+                    <h3>GnerPer - Cálculo de Porcentajes </h3>
                     <p>Medición de peso a partir de masa.</p>
                 </div>
                 <div class="hud-overlay">
@@ -174,7 +186,7 @@
                     <img src="./public/icons/EXPO_V2.svg" alt="Expo V2" />
                 </div>
                 <div class="tool-info">
-                    <h3>GnerExpo Expotanción Avanzada</h3>
+                    <h3>GnerExpo - Exportación Automatica</h3>
                     <p>Traducción de formatos sin pérdida.</p>
                 </div>
                 <div class="hud-overlay">
@@ -439,6 +451,9 @@
             </video>
             <div class="video-overlay-gradient"></div>
         </div>
+
+        <!-- Transición Cinemática Inferior (Escape de las Auras hacia el Footer) -->
+        <div class="transition-fade-bottom"></div>
     </section>
 
     <!-- Start Creating / Pricing Section -->
@@ -520,9 +535,9 @@
         </div>
     </div>
 
-    <!-- Checkout Modal (Cinematic) -->
+    <!-- Checkout Modal (Cinematic / Terminal) -->
     <div id="checkout-modal" class="modal-overlay">
-        <div class="modal-glass">
+        <div class="modal-glass terminal-modal">
             <button id="close-modal" class="btn-close">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 6L6 18M6 6l12 12" />
@@ -530,67 +545,21 @@
             </button>
             <div class="modal-header">
                 <img src="./public/icons/logo GnerLab.svg" class="modal-logo" alt="logo" />
-                <h2>Autenticación Requerida</h2>
-                <p>Ingrese la credencial de acceso para descargar GnerLab Setup Oficial.</p>
+                <h2 class="terminal-title">AUTH_REQ // PROTOCOL V5</h2>
             </div>
-            <div class="modal-body">
-                <div class="input-group">
-                    <label for="access-key">Clave de Acceso</label>
-                    <input type="password" id="access-key" placeholder="••••••••••••" autocomplete="off" />
-                    <div id="error-message" class="error-msg hidden">Acceso denegado. Credencial inválida.</div>
+            <div class="modal-body terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                    <!-- DOM reset via JS -->
                 </div>
-                <button id="btn-verify-download" class="btn-primary w-full mt-4">Verificar y Descargar</button>
-            </div>
-            <div class="modal-footer">
-                <span class="tech-text">SECURE CONNECTION // ENCRYPTED DOWNLOAD</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3D AR Modal -->
-    <div id="ar-modal" class="modal-overlay" onclick="if(event.target === this) window.close3DModal()">
-        <div class="modal-glass video-glass"
-            style="display: flex; flex-direction: column; align-items: center; max-width: 800px;">
-            <button id="close-ar-modal" class="btn-close" style="z-index: 10;" onclick="window.close3DModal()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-            </button>
-            <div class="video-container-inner" style="width: 100%; height: 60vh; position: relative;">
-
-                <!-- Modelo 3D Interactivo (Rotable por dedo/mouse) -->
-                <model-viewer id="main-3d-viewer" src="" camera-controls auto-rotate shadow-intensity="1"
-                    environment-image="neutral" interaction-prompt="auto"
-                    style="width: 100%; height: 100%; background-color: transparent;" alt="Modelo 3D">
-                </model-viewer>
-
-            </div>
-
-            <!-- Panel Inferior del Modal: Marcador AR Universal -->
-            <div
-                style="width: 100%; background: rgba(5,5,5,0.8); border-top: 1px solid var(--color-glass-strong); padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-
-                <div style="display: flex; gap: 1rem; align-items: center;">
-                    <img src="./public/ar/hiro_marker.png" alt="AR Marker"
-                        style="width: 80px; height: 80px; border: 2px solid white; border-radius: 4px;" />
-                    <div>
-                        <h4 style="color: white; font-size: 1.1rem; margin-bottom: 0.2rem;">AR Universal Integrado</h4>
-                        <p style="color: var(--color-text-muted); font-size: 0.85rem; max-width: 300px;">
-                            <strong>Si estás en PC:</strong> Mantén esta pantalla abierta y presiona el botón rojo desde
-                            tu <b>celular</b> para proyectar la pieza sobre este recuadro blanco.<br />
-                            <strong>Si estás en Celular:</strong> Presiona el botón rojo.
-                        </p>
-                    </div>
+                <div class="input-group terminal-input-group mt-4 fade-in-delay-4" id="terminal-input-container">
+                    <label for="access-key" class="tech-text" style="color: #fff; margin-bottom: 8px; display: block;">> INGRESE PROTOCOLO ALFA [ACCESS_KEY_MD5]:</label>
+                    <input type="password" id="access-key" class="terminal-input" placeholder="INGRESE_CLAVE_AQUÍ█" autocomplete="off" />
+                    <div id="error-message" class="error-msg hidden terminal-error">> ERROR: CANCELADO. FIRMA INVÁLIDA.</div>
                 </div>
-
-                <a href="#hero" id="btn-universal-ar" class="btn-primary"
-                    style="text-decoration: none; padding: 14px 28px; font-weight: bold; border-radius: 8px;">
-                    Ojo AR (Cámara)
-                </a>
-
+                <button id="btn-verify-download" class="btn-primary w-full mt-4 fade-in-delay-4 terminal-btn">[ EJECUTAR_DECRYPT ]</button>
             </div>
-            <div class="modal-footer" style="width: 100%; text-align: center; margin-top: 1rem;">
-                <span class="tech-text">GNERLAB 3D VIEWER // NATIVE AR</span>
+            <div class="modal-footer fade-in-delay-4" id="terminal-footer">
+                <span class="tech-text glitch-text">SECURE CONNECTION // ENCRYPTED DOWNLOAD</span>
             </div>
         </div>
     </div>
