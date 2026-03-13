@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
 </head>
 
 <body>
@@ -28,8 +29,9 @@
         <div class="nav-content">
             <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo" class="nav-logo" />
             <div class="nav-links">
-                <a href="#hero" class="nav-link">Inicio</a>
-                <a href="#workspace" class="nav-link">Workspace</a>
+                <a href="#" class="nav-link">Inicio</a>
+                <a href="#main-features" class="nav-link">DI Paramétrico</a>
+                <a href="#workspace" class="nav-link">Módulos Automáticos</a>
                 <button id="btn-download-nav" class="btn-primary-small">Obtener Acceso</button>
             </div>
         </div>
@@ -68,6 +70,21 @@
         </div>
     </header>
 
+    <!-- Características Principales de GnerLab -->
+    <section id="main-features" class="features-section" style="width: 100%; height: 110vh; position: relative; z-index: 10; background: transparent;">
+        <!-- Desenfoque Superior (Fusión con Hero) -->
+        <div class="transition-fade" style="z-index: 20; height: 30vh; top: -15vh;"></div>
+
+        <spline-viewer url="https://prod.spline.design/8SxYOpTP-lgViu4T/scene.splinecode" style="width: 100%; height: 100%;"></spline-viewer>
+
+        <!-- Capa de camuflaje para ocultar el Logo de Spline -->
+        <div style="position: absolute; bottom: 12px; right: 16px; width: 140px; height: 45px; background: #0F0F0F; z-index: 50; border-radius: 12px; box-shadow: 0 0 15px 8px #0F0F0F; cursor: default;"></div>
+
+
+        <!-- Desenfoque Inferior (Fusión con Workspace) -->
+        <div class="transition-fade-bottom" style="z-index: 20; height: 10vh; bottom: -5vh; pointer-events: none;"></div>
+    </section>
+
     <!-- Workspace Grid Section -->
     <section id="workspace" class="workspace-section">
         
@@ -77,8 +94,8 @@
             <div class="halo-bottom"></div>
         </div>
 
-        <!-- Transición Cinemática Superior (Efecto de Desenfoque y Mezcla al Hero) -->
-        <div class="transition-fade"></div>
+        <!-- Transición Cinemática Superior (Eliminada para no ocultar el texto de Características) -->
+        <div class="transition-fade" style="display: none;"></div>
 
         <div class="section-header fade-up-scroll">
             <span class="section-badge">GNER WORKSPACE 2.0</span>
@@ -487,7 +504,7 @@
                 <div class="popular-badge">MÁS POPULAR</div>
                 <div class="pricing-top">
                     <h3>Pro</h3>
-                    <div class="price"><span>$</span>200<span>us</span></div>
+                    <div class="price"><span>£</span>200</div>
                     <p class="pricing-desc">Ideal para flujos de trabajo profesionales.</p>
                 </div>
                 <ul class="pricing-features">
