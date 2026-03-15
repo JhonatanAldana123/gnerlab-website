@@ -2,21 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================================================
        CUSTOM CURSOR
        ========================================================================= */
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
+    const customCursor = document.querySelector('.custom-cursor');
 
     document.addEventListener('mousemove', (e) => {
-        if (cursorDot) {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-        }
-        if (cursorOutline) {
-            cursorOutline.style.left = `${e.clientX}px`;
-            cursorOutline.style.top = `${e.clientY}px`;
+        if (customCursor) {
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
         }
     });
 
-    // Efecto hover en elementos clickeables
+    // Efecto hover y magnético en elementos clickeables
     const clickables = document.querySelectorAll('a, button, input, .tool-card');
     clickables.forEach((el) => {
         el.addEventListener('mouseenter', () => {
@@ -24,7 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         el.addEventListener('mouseleave', () => {
             document.body.classList.remove('cursor-hover');
+            // Reset magnetic
+            if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
+                gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+            }
         });
+
+        // Magnetic Effect
+        if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                gsap.to(el, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    duration: 0.4,
+                    ease: "power2.out"
+                });
+            });
+        }
     });
 
     /* =========================================================================
@@ -72,16 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const tl = gsap.timeline();
 
-        // Entrada inicial cargada en la vista
+        // Entrada inicial cargada en la vista - Animación tipo Decrypt/Fade
         tl.fromTo('.hero-title .line',
-            { y: 100, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power4.out", delay: 0.2 }
+            { y: 60, opacity: 0, filter: "blur(10px)", rotationX: -20 },
+            { y: 0, opacity: 1, filter: "blur(0px)", rotationX: 0, duration: 1.2, stagger: 0.15, ease: "power4.out", delay: 0.2 }
         );
 
         tl.fromTo('.fade-up',
-            { y: 40, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power4.out" },
-            "-=0.6"
+            { y: 30, opacity: 0, filter: "blur(5px)" },
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, stagger: 0.2, ease: "power3.out" },
+            "-=0.8"
         );
 
         // SCROLL REVEAL (Pin y escala de elementos)

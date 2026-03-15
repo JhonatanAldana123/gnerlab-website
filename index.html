@@ -16,22 +16,26 @@
 </head>
 
 <body>
-    <!-- Background Textures -->
+    <!-- Background Textures & Noise -->
+    <div id="noise-overlay"></div>
     <div id="left-bg-texture"></div>
     <div id="fluid-space-overlay"></div>
 
     <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="custom-cursor">
+        <img src="./public/icons/001_GENERAL/Puntero.svg" alt="Puntero GnerLab" class="cursor-svg"/>
+    </div>
 
     <!-- Floating Navbar -->
-    <nav id="navbar" class="nav-transparent">
+    <nav id="navbar">
         <div class="nav-content">
-            <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo" class="nav-logo" />
+            <div class="nav-icon-container">
+                <img src="./public/icons/001_GENERAL/Icono_Gnerlab.svg" alt="GnerLab Icon" class="nav-icon" />
+            </div>
             <div class="nav-links">
                 <a href="#" class="nav-link">Inicio</a>
-                <a href="#main-features" class="nav-link">DI Paramétrico</a>
-                <a href="#workspace" class="nav-link">Módulos Automáticos</a>
+                <a href="#main-features" class="nav-link">D Generativo</a>
+                <a href="#workspace" class="nav-link">Módulos Automaticos</a>
                 <button id="btn-download-nav" class="btn-primary-small">Obtener Acceso</button>
             </div>
         </div>
@@ -51,21 +55,19 @@
         </div>
 
         <div class="hero-content" style="text-align: center;">
-            <div class="hero-main-logo fade-up" style="margin-top: 10vh; margin-bottom: 10vh; max-width: 600px; padding-bottom: 1rem; margin-inline: auto; position: relative; z-index: 2;">
+            <div class="hero-main-logo fade-up" style="margin-top: 15vh; margin-bottom: 5vh; max-width: 900px; padding-bottom: 0; margin-inline: auto; position: relative; z-index: 2;">
                 <!-- Id 'massive-logo' necesario para la animación SCROLL de GSAP -->
                 <img id="massive-logo" src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
-                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1) drop-shadow(0 0 40px rgba(255,0,55,0.2));" />
+                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1) drop-shadow(0 0 25px rgba(255,255,255,0.6)) drop-shadow(0 0 50px rgba(255,255,255,0.2));" />
             </div>
             
             <div id="hero-texts" style="position: relative; z-index: 2;">
-                <div class="split-text-container">
-                    <h1 class="hero-title">
-                        <span class="line-wrap"><span class="line">DISEÑO PARAMÉTRICO</span></span>
-                        <span class="line-wrap"><span class="line">SIN FRICCIÓN. LA EVOLUCIÓN</span></span>
-                        <span class="line-wrap"><span class="line highlight">INTELIGENTE DEL 3D.</span></span>
+                <div class="split-text-container" style="perspective: 1000px;">
+                    <h1 class="hero-title" style="font-size: clamp(3.75rem, 6vw, 5.7rem); letter-spacing: 0em;">
+                        <span class="line-wrap"><span class="line">REDEFINE TU FORMA DE <span class="highlight-red">CREAR</span></span></span>
                     </h1>
                 </div>
-                <p class="hero-subtitle fade-up" style="margin-inline: auto; max-width: 800px;">Diseñado para los creadores más exigentes. Fusiona el rigor técnico con el desarrollo asistido por IA. Elimina la barrera técnica entre tu visión y la pantalla, delegando los cálculos matemáticos repetitivos a nuestros algoritmos. Concéntrate en la innovación de tus proyectos mientras el software se encarga de la fricción.</p>
+                <p class="hero-subtitle fade-up" style="margin-inline: auto; max-width: 1200px; font-size: clamp(1.3rem, 2vw, 1.8rem); line-height: 1.6; letter-spacing: 0.02em;">Diseñar no debe ser lento ni repetitivo. Simplifica procesos complejos y<br>descubre <strong style="color: #fff; font-weight: 700;">flujos de trabajo rápidos, precisos y profesionales.</strong></p>
             </div>
         </div>
     </header>
@@ -97,367 +99,169 @@
         <!-- Transición Cinemática Superior (Eliminada para no ocultar el texto de Características) -->
         <div class="transition-fade" style="display: none;"></div>
 
-        <div class="section-header fade-up-scroll">
-            <span class="section-badge">GNER WORKSPACE 2.0</span>
-            <h2>Módulos de Alto Rendimiento</h2>
-            <div class="hero-actions" style="margin-top: 2rem;">
-                <button id="btn-download-hero" class="btn-primary">Descargar Ahora</button>
-                <a href="#workspace" class="btn-secondary">Explorar Módulos</a>
-            </div>
+        <div class="section-header fade-up-scroll" style="display: flex; justify-content: space-between; align-items: center; max-width: 1440px; margin: 0 auto 3rem auto; flex-wrap: wrap; gap: 1rem;">
+            <h2 style="margin: 0; font-size: clamp(2rem, 3.5vw, 3rem); text-transform: uppercase;">MÓDULOS DE ALTO RENDIMIENTO</h2>
+            <div style="border: 1px solid var(--color-primary); border-radius: 9999px; padding: 6px 20px; color: var(--color-primary); font-weight: 500; font-size: 1rem;">GnerWorkspace 2.0</div>
         </div>
 
         <div class="grid-container">
 
-            <!-- Tool Item: Cotas -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/COTAS.svg" alt="Cotas" />
-                </div>
-                <div class="tool-info">
-                    <h3>GnerCot - Cotas Dinámicas</h3>
-                    <p>Acotado simultáneo por objeto o por grupos individuales, con configuración directa de parámetros
-                        (color, distancia y tamaño). Asigna automáticamente a la capa COTAS y excluye la capa ARTES.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.DIMS.07</span>
-                        <ul>
-                            <li>Distancias Exactas</li>
-                            <li>Acotaciones por Layer</li>
-                            <li>Estilos Centralizados</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 1: Cotas Dinámicas -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/COTAS.svg" alt="Cotas" />
                     </div>
+                    <h3>Cotas Dinámicas</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Conteo -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/CONTEO_V2.svg" alt="Conteo V2" />
-                </div>
-                <div class="tool-info">
-                    <h3>GnerCont - Conteo Inteligente</h3>
-                    <p>Auditoría de geometría en tiempo real.</p>
-                </div>
-                <!-- HUD Overlay for Features -->
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.AUDIT.01</span>
-                        <ul>
-                            <li>Precisión 99.9%</li>
-                            <li>Detección de Intersecciones</li>
-                            <li>Reportes Automáticos</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 2: Matriz -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
                     </div>
+                    <h3>Matriz</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Peso/Masa -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/PESO.svg" alt="Peso" />
-                </div>
-                <div class="tool-info">
-                    <h3>GnerPer - Cálculo de Porcentajes </h3>
-                    <p>Medición de peso a partir de masa.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.MASS.11</span>
-                        <ul>
-                            <li>Conversión de Volumen</li>
-                            <li>Metadatos Extendidos</li>
-                            <li>Totales Precisos</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 3: Peso & porcentaje -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/PESO.svg" alt="Peso y porcentaje" />
                     </div>
+                    <h3>Peso & porcentaje</h3>
+                    <p>Cálculo por dimensiones y densidad definida.</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Peso Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Exportación -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/EXPO_V2.svg" alt="Expo V2" />
-                </div>
-                <div class="tool-info">
-                    <h3>GnerExpo - Exportación Automatica</h3>
-                    <p>Traducción de formatos sin pérdida.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.EXPORT.02</span>
-                        <ul>
-                            <li>Multi-hilo (Fast Render)</li>
-                            <li>Preservación de Capas</li>
-                            <li>Lotes por Atributos</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 4: Conteo -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/CONTEO_V2.svg" alt="Conteo" />
                     </div>
+                    <h3>Conteo</h3>
+                    <p>Enumeración piezas Conteo de juegos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Conteo Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Orden -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/ORDEN_V2.svg" alt="Orden V2" />
-                </div>
-                <div class="tool-info">
-                    <h3>Orden Arquitectónico</h3>
-                    <p>Estructuración semántica del modelo.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.STRUCT.03</span>
-                        <ul>
-                            <li>Naming Automático</li>
-                            <li>Jerarquía de Ensamblaje</li>
-                            <li>Limpieza de Bloques</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 5: Distribución -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/REP_V2.svg" alt="Distribución" />
                     </div>
+                    <h3>Distribución</h3>
+                    <p>Repetición inteligente de objeto en un espacio determinado</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Distribución Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Repeticiones -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/REP_V2.svg" alt="Rep V2" />
-                </div>
-                <div class="tool-info">
-                    <h3>Repeticiones de una Matriz</h3>
-                    <p>Gestión de bloques instanciados.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.MATRIX.04</span>
-                        <ul>
-                            <li>Instanciación Paramétrica</li>
-                            <li>Optimización de Memoria</li>
-                            <li>Distribución Espacial</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 6: Cotas Dinámicas (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/COTAS.svg" alt="Cotas" />
                     </div>
+                    <h3>Cotas Dinámicas</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Booleana -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/BOLEANA.svg" alt="Booleana" />
-                </div>
-                <div class="tool-info">
-                    <h3>Booleana Inteligente</h3>
-                    <p>Operaciones de sustracción complejas.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.BOOL.05</span>
-                        <ul>
-                            <li>Sólidos Perfectos</li>
-                            <li>Sin Artefactos</li>
-                            <li>Cálculo Paralelo</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 7: Matriz (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
                     </div>
+                    <h3>Matriz</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Captura -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/CAPTURA.svg" alt="Captura" />
-                </div>
-                <div class="tool-info">
-                    <h3>Captura Avanzada</h3>
-                    <p>Documentación visual de alto rango.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.CAPT.06</span>
-                        <ul>
-                            <li>Renders Viewport 4K</li>
-                            <li>Auto-Composición</li>
-                            <li>Preservación DOF</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 8: Peso & porcentaje (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/PESO.svg" alt="Peso y porcentaje" />
                     </div>
+                    <h3>Peso & porcentaje</h3>
+                    <p>Cálculo por dimensiones y densidad definida.</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Peso Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Intersecciones -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/INTER.svg" alt="Inter" />
-                </div>
-                <div class="tool-info">
-                    <h3>Detección Intersecciones</h3>
-                    <p>Auditoría de colisiones 3D (Clash).</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.INTX.08</span>
-                        <ul>
-                            <li>Clash Detection</li>
-                            <li>Aislación de Errores</li>
-                            <li>Visualización de Nodos</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 9: Conteo (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/CONTEO_V2.svg" alt="Conteo" />
                     </div>
+                    <h3>Conteo</h3>
+                    <p>Enumeración piezas Conteo de juegos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Conteo Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Mapeado -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/MAPEADO.svg" alt="Mapeado" />
-                </div>
-                <div class="tool-info">
-                    <h3>Mapeado UV Automático</h3>
-                    <p>Gestión avanzada de coordenadas UV.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.MAP.09</span>
-                        <ul>
-                            <li>Box Mapping Global</li>
-                            <li>Escala unificada</li>
-                            <li>Ajustes en bloque</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
+            <!-- Card 10: Distribución (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/REP_V2.svg" alt="Distribución" />
                     </div>
+                    <h3>Distribución</h3>
+                    <p>Repetición inteligente de objeto en un espacio determinado</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Distribución Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Tool Item: Material -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/MATERIAL.svg" alt="Material" />
-                </div>
-                <div class="tool-info">
-                    <h3>Asignación Materiales</h3>
-                    <p>Pintado de propiedades paramétrico.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.MAT.10</span>
-                        <ul>
-                            <li>Vínculos por Layer</li>
-                            <li>Bibliotecas Externas</li>
-                            <li>Render-ready Nodes</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
-                    </div>
-                </div>
-            </div>
+        </div>
 
-            <!-- Tool Item: Transformación -->
-            <div class="tool-card" data-video="bLIz0jGCgzU">
-                <div class="tool-icon">
-                    <img src="./public/icons/TRANSFORM.svg" alt="Transform" />
-                </div>
-                <div class="tool-info">
-                    <h3>Transformación Espacial</h3>
-                    <p>Manipulación coordinada y escalas.</p>
-                </div>
-                <div class="hud-overlay">
-                    <div class="hud-content">
-                        <span class="hud-tech-text">SYS.TRANS.12</span>
-                        <ul>
-                            <li>Alineación Perfecta</li>
-                            <li>Ejes Locales/Globales</li>
-                            <li>Matrices Escalonadas</li>
-                        </ul>
-                        <button onclick="window.openVideoModal('bLIz0jGCgzU')"
-                            class="btn-primary-small w-full mt-4 btn-play-video" style="gap: 8px;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                            </svg>
-                            Ver Funcionamiento
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+        <div style="text-align: center; margin-top: 5rem; margin-bottom: 5rem; position: relative; z-index: 10;">
+            <h2 style="font-size: clamp(3rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase;">
+                <span style="color: white; text-shadow: 0 0 30px rgba(255,255,255,0.3);">EMPIEZA A </span><span style="color: var(--color-primary); text-shadow: 0 0 30px rgba(255,0,55,0.6);">CREAR</span>
+            </h2>
         </div>
 
         <!-- Unified Video Preview Container (Sticky Background Video) -->

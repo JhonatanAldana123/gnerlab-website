@@ -25,8 +25,8 @@
 
 :root {
     --color-primary: #FF0037;
-    --color-accent: #2B2B2B;
-    --color-bg: #050505;
+    --color-accent: #FF0037;
+    --color-bg: #2B2B2B;
     --color-text: #FFFFFF;
     --color-text-muted: #888888;
     --color-glass: rgba(255, 255, 255, 0.05);
@@ -93,40 +93,31 @@ body {
 /* =========================================================================
    CUSTOM CURSOR
    ========================================================================= */
-.cursor-dot,
-.cursor-outline {
+.custom-cursor {
     position: fixed;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
-    transition: scale 0.15s ease-out, background-color 0.15s ease, opacity 0.15s ease-out;
+    /* Si el puntero del SVG no apunta exactamente a la esquina superior izquierda, podemos usar translate */
+    transform-origin: top left;
+    transition: scale 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background-color: var(--color-primary);
+.custom-cursor .cursor-svg {
+    width: 32px;
+    height: auto;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--color-glass-strong);
+/* Cursor interactivo (hover): Compresión y Emisión de Neón */
+.cursor-hover .custom-cursor {
+    scale: 0.85;
 }
 
-/* Cursor interactivo (hover): Convergencia (0 Separación) */
-.cursor-hover .cursor-outline {
-    scale: 0.2;
-    opacity: 0;
-}
-
-.cursor-hover .cursor-dot {
-    scale: 2.5;
-    background-color: var(--color-primary);
-    box-shadow: 0 0 10px rgba(255, 0, 55, 0.4);
+.cursor-hover .cursor-svg {
+    filter: drop-shadow(0 0 15px rgba(255, 0, 55, 0.8));
 }
 
 /* =========================================================================
@@ -172,35 +163,75 @@ body {
     100% { transform: scale(1.05) translate(4vw, 5vh); }
 }
 
+/* FILM GRAIN / NOISE OVERLAY */
+#noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 50; /* Sobre casi todo menos UI muy prioritaria */
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+}
+
 /* =========================================================================
-   TYPOGRAPHY
+   TYPOGRAPHY & HIERARCHY
    ========================================================================= */
-h1,
-h2,
-h3,
-h4 {
-    font-weight: 700;
+h1, h2, h3, h4 {
+    font-family: var(--font-base);
+    color: var(--color-text);
     line-height: 1.1;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-sm);
 }
 
+/* H1: Massive Titles. Bold and tight for Tech Noir impact. */
 h1 {
-    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 700;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
 }
 
+/* H2: Section Headers. Bold, clean, authoritative. */
 h2 {
+    font-weight: 700;
     font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
 }
 
+/* H3: Cards / Modules. Medium weight, elegant and extremely clean. */
 h3 {
-    font-size: 1.5rem;
+    font-weight: 500;
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+    letter-spacing: 0;
+    color: #FFFFFF;
 }
 
+/* Paragraphs & Descriptions: Regular weight, geometric readability. */
+p {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    color: var(--color-text-muted);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* Tech & System Status Text */
 .tech-text {
-    font-family: monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
+    font-family: 'Gilroy', monospace; /* Fallback to monospace if needed, but Gilroy primary */
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
     color: var(--color-primary);
     text-transform: uppercase;
 }
@@ -265,14 +296,16 @@ button,
 .btn-primary-small {
     background-color: var(--color-primary);
     color: white;
-    padding: 0.5rem 1.5rem;
-    font-size: 0.875rem;
-    border-radius: var(--radius-sm);
+    padding: 0.6rem 1.8rem;
+    font-size: 0.95rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
 }
 
 .btn-primary-small:hover {
     background-color: white;
     color: var(--color-primary);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
 /* =========================================================================
@@ -292,34 +325,48 @@ nav {
 .nav-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 1440px;
+    /* Glassmorphism Puro y Transparente como solicitaste */
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Borde sutil cristalino */
+    border-radius: var(--radius-pill);
+    padding: 6px 6px 6px 8px; /* Espaciado interno asimétrico para compensar el círculo */
+    gap: 1rem;
     transition: all var(--transition-smooth);
-    padding: 10px 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra apenas perceptible */
 }
 
-.nav-transparent {
-    background: transparent;
+.nav-icon-container {
+    width: 38px;
+    height: 38px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 0 0 15px rgba(255, 0, 55, 0.4); /* Efecto emisivo interior y exterior */
 }
 
-.nav-logo {
-    height: 24px;
-    width: auto;
+.nav-icon {
+    width: 18px;
+    height: 18px;
     filter: brightness(0) invert(1);
+    object-fit: contain;
 }
 
 .nav-links {
     display: flex;
-    gap: var(--spacing-lg);
+    gap: 2.5rem; /* Mayor separación entre textos, exacto como la referencia */
     align-items: center;
+    padding-right: 4px;
 }
 
 .nav-link {
     color: var(--color-text);
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 400;
+    font-size: 0.95rem;
     transition: color var(--transition-fast);
 }
 
@@ -327,18 +374,14 @@ nav {
     color: var(--color-primary);
 }
 
-/* Scroll state - Pill form */
+/* Scroll state - Mantiene el cristal pero ligeramente más profundo */
 .nav-scrolled {
     padding: var(--spacing-md) 0;
 }
 
 .nav-scrolled .nav-content {
-    background: rgba(255, 255, 255, 0.05);
-    /* Dark pill instead of white for Tech Noir */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* =========================================================================
@@ -376,9 +419,9 @@ nav {
 .hero-video-overlay {
     position: absolute;
     inset: 0;
-    /* Fusión bestial: Suave en el centro, oscuro profundo en los bordes y hacia ABAJO */
+    /* Fusión bestial adaptada a Pantone 2B2B2B */
     background: 
-        radial-gradient(circle at center, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.9) 70%),
+        radial-gradient(circle at center, rgba(43,43,43,0.2) 0%, rgba(43,43,43,0.9) 70%),
         linear-gradient(to bottom, transparent 0%, transparent 60%, var(--color-bg) 100%);
     z-index: 1;
 }
@@ -425,6 +468,17 @@ nav {
     background-clip: text;
     animation: textShine 4s linear infinite;
     text-shadow: 0 0 30px rgba(255, 0, 55, 0.6);
+}
+
+.highlight-red {
+    color: transparent;
+    background: linear-gradient(90deg, #FFFFFF 0%, var(--color-primary) 50%, #FFFFFF 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShine 3.5s linear infinite;
+    /* Sombras duales: blanca y roja para que el resplandor también respire visualmente */
+    filter: drop-shadow(0 0 15px rgba(255, 0, 55, 0.6));
 }
 
 @keyframes textShine {
@@ -544,9 +598,18 @@ nav {
     margin-bottom: var(--spacing-md);
 }
 
+.pulse-badge {
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 0px rgba(255, 0, 55, 0); }
+    to { box-shadow: 0 0 15px rgba(255, 0, 55, 0.4); }
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--spacing-lg);
     max-width: 1440px;
     margin: 0 auto;
@@ -556,135 +619,112 @@ nav {
 }
 
 .tool-card {
-    background: rgba(10, 10, 10, 0.6);
+    position: relative;
+    background: rgba(43, 43, 43, 0.6);
     backdrop-filter: blur(10px);
     border: 1px solid var(--color-glass);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    position: relative;
+    border-radius: 24px;
+    padding: var(--spacing-lg) var(--spacing-md);
     overflow: hidden;
-    transition: transform 0.1s linear, background var(--transition-smooth), border-color var(--transition-smooth);
-    min-height: 380px;
-    height: auto;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color var(--transition-smooth);
     display: flex;
     flex-direction: column;
-    transform-style: preserve-3d;
+    align-items: center;
+    text-align: center;
+    min-height: 280px; /* Reducido para que quede más cuadrado */
+    justify-content: center;
 }
 
-/* EFECTO SPOTLIGHT BORDER: Sigue al cursor internamente */
-.tool-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px; /* Grosor del borde brillante */
-    background: radial-gradient(
-        600px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
-        var(--color-primary),
-        transparent 40%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity var(--transition-smooth);
+.tool-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(255, 0, 55, 0.25);
 }
 
-/* EFECTO SPOTLIGHT INNER: Halo interno que ilumina la tarjeta */
-.tool-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        500px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
-        rgba(255, 0, 55, 0.08),
-        transparent 40%
-    );
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0;
-    transition: opacity var(--transition-smooth);
-}
-
-.tool-card:hover::before,
-.tool-card:hover::after {
-    opacity: 1;
+.module-base {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .tool-icon {
-    margin-bottom: auto;
     width: 100%;
+    margin-bottom: 1.25rem; /* Ajuste más tenso */
 }
 
 .tool-icon img {
     display: block;
     margin: 0 auto;
-    width: 100px;
-    height: 100px;
+    width: 90px; /* Tamaño adaptado para card compacta */
+    height: 90px;
     filter: drop-shadow(0 0 10px rgba(255, 0, 55, 0));
     transition: filter var(--transition-smooth);
 }
 
 .tool-card h3 {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 0.5rem;
     transition: color var(--transition-fast);
     text-transform: none;
+    font-size: 1.35rem; /* Letra ajustada al ancho más estrecho */
+    font-weight: 700;
 }
 
 .tool-card p {
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem; /* Reducido sutilmente */
+    line-height: 1.35;
+    font-weight: 400;
+    margin: 0;
 }
-
-/* Hover Effects */
-.tool-card:hover {
-    background: rgba(20, 20, 20, 0.8);
-    border-color: transparent; /* Oculta el borde base para dejar lucir al spotlight */
-}
-
-.tool-card:hover .tool-icon img {
-    filter: drop-shadow(0 0 15px rgba(255, 0, 55, 0.5));
-}
-
-.tool-card:hover h3 {
-    color: var(--color-primary);
-}
-
-/* HUD Overlay */
-.hud-overlay {
+.module-hover {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: rgba(5, 5, 5, 0.9);
-    padding: var(--spacing-lg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all var(--transition-smooth);
-    pointer-events: none;
-    /* Let hover rely on tool-card */
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
 }
 
-.tool-card:hover .hud-overlay {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.hud-tech-text {
-    font-family: monospace;
-    color: var(--color-primary);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    margin-bottom: var(--spacing-md);
+.module-hover-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
+}
+
+.module-play-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 65px; /* Calculado visualmente para la proporción de tarjeta */
+    height: auto;
+    z-index: 3;
+    pointer-events: none; /* No roba el clic de la tarjeta padre */
+    filter: drop-shadow(0 4px 15px rgba(0,0,0,0.5));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.tool-card:hover .module-hover {
+    opacity: 1;
+}
+
+/* Oscurecemos y desenfocamos la base atrás para que el rojo sobresalga limpiamente */
+.tool-card:hover .module-base {
+    opacity: 0;
+    filter: brightness(0.5);
+}
+
+/* Efecto magnético sutil interactivo en el botón Hover */
+.tool-card:hover .module-play-btn {
+    transform: scale(1.08); /* Se expande ligeramente cuando aparece */
+    filter: drop-shadow(0 8px 25px rgba(0,0,0,0.7));
 }
 
 .hud-content ul {
@@ -751,7 +791,7 @@ nav {
     position: relative;
     padding: 15vh 5%;
     z-index: 5; /* Menor que workspace-section para que la transición caiga por encima */
-    background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.6) 0%, transparent 80%);
+    background: radial-gradient(circle at 50% 50%, rgba(43, 43, 43, 0.6) 0%, transparent 80%);
 }
 
 .pricing-header {
@@ -783,7 +823,7 @@ nav {
 }
 
 .pricing-card {
-    background: rgba(10, 10, 10, 0.4);
+    background: rgba(43, 43, 43, 0.4);
     backdrop-filter: blur(20px);
     border: 1px solid var(--color-glass-strong);
     border-radius: var(--radius-lg);
@@ -957,7 +997,7 @@ nav {
 }
 
 .modal-glass {
-    background: rgba(10, 10, 10, 0.7);
+    background: rgba(43, 43, 43, 0.7);
     border: 1px solid rgba(255, 0, 55, 0.3);
     box-shadow: 0 0 50px rgba(255, 0, 55, 0.1);
     width: 100%;
@@ -1151,7 +1191,7 @@ html.lenis, html.lenis body {
    TERMINAL MODAL (BIOMETRIC CHECKOUT)
    ========================================================================= */
 .terminal-modal {
-    background: rgba(10, 10, 10, 0.95);
+    background: rgba(43, 43, 43, 0.95);
     border: 1px solid transparent; /* Ocultamos el estático para dejar brillar el halo interactivo */
     box-shadow: 0 0 40px rgba(255, 0, 55, 0.15), inset 0 0 20px rgba(255, 0, 55, 0.1);
     border-radius: var(--radius-lg); /* Esquinas curvas premium */
