@@ -1,46 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
     /* =========================================================================
-       CUSTOM CURSOR
+       DETECCIÓN DE DISPOSITIVO (Mobile vs Desktop)
        ========================================================================= */
-    const customCursor = document.querySelector('.custom-cursor');
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    const isMobile = isTouchDevice || window.innerWidth <= 768;
 
-    document.addEventListener('mousemove', (e) => {
-        if (customCursor) {
-            customCursor.style.left = `${e.clientX}px`;
-            customCursor.style.top = `${e.clientY}px`;
-        }
-    });
+    /* =========================================================================
+       CUSTOM CURSOR (Solo Desktop — evita overhead en móvil)
+       ========================================================================= */
+    if (!isTouchDevice) {
+        const customCursor = document.querySelector('.custom-cursor');
 
-    // Efecto hover y magnético en elementos clickeables
-    const clickables = document.querySelectorAll('a, button, input, .tool-card');
-    clickables.forEach((el) => {
-        el.addEventListener('mouseenter', () => {
-            document.body.classList.add('cursor-hover');
-        });
-        el.addEventListener('mouseleave', () => {
-            document.body.classList.remove('cursor-hover');
-            // Reset magnetic
-            if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
-                gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+        document.addEventListener('mousemove', (e) => {
+            if (customCursor) {
+                customCursor.style.left = `${e.clientX}px`;
+                customCursor.style.top = `${e.clientY}px`;
             }
         });
+    }
 
-        // Magnetic Effect
-        if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
-            el.addEventListener('mousemove', (e) => {
-                const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                
-                gsap.to(el, {
-                    x: x * 0.3,
-                    y: y * 0.3,
-                    duration: 0.4,
-                    ease: "power2.out"
-                });
+    // Efecto hover y magnético en elementos clickeables (solo desktop)
+    if (!isTouchDevice) {
+        const clickables = document.querySelectorAll('a, button, input, .tool-card');
+        clickables.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover');
             });
-        }
-    });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover');
+                if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
+                    gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+                }
+            });
+
+            // Magnetic Effect
+            if (el.classList.contains('btn-primary') || el.classList.contains('btn-secondary')) {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    gsap.to(el, {
+                        x: x * 0.3,
+                        y: y * 0.3,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                });
+            }
+        });
+    }
 
     /* =========================================================================
        NAVBAR MORPH (SCROLL)
@@ -135,61 +144,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* =========================================================================
-       VIDEO PLACEHOLDER / GRID HOVER LOGIC
+       VIDEO PLACEHOLDER / GRID HOVER LOGIC (Solo Desktop)
        ========================================================================= */
-    const toolCards = document.querySelectorAll('.tool-card');
-    const videoContainer = document.getElementById('video-preview-container');
-    const previewVideo = document.getElementById('preview-video');
+    if (!isTouchDevice) {
+        const toolCards = document.querySelectorAll('.tool-card');
+        const videoContainer = document.getElementById('video-preview-container');
+        const previewVideo = document.getElementById('preview-video');
 
-    // Puedes usar colores gradientes o un mismo video de test para los placeholders
-    // En el futuro, reemplaza src con el video real
-    const placeholderVideoSrc = ""; // Deja vacío o añade un URI a un MP4 estético de Unsplash
+        const placeholderVideoSrc = "";
 
-    toolCards.forEach(card => {
-        // --- Interacción Espacial 3D y Spotlight ---
-        let cardTicking = false;
+        toolCards.forEach(card => {
+            let cardTicking = false;
 
-        // --- Interacción Espacial 3D y Spotlight MÁS FLUIDO (GPU) ---
-        card.addEventListener('mousemove', (e) => {
-            if (!cardTicking) {
-                requestAnimationFrame(() => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    // Suaviza la inclinación física dividiéndola
-                    const rotateX = ((y - centerY) / centerY) * -4; 
-                    const rotateY = ((x - centerX) / centerX) * 4;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                    cardTicking = false;
-                });
-                cardTicking = true;
-            }
+            card.addEventListener('mousemove', (e) => {
+                if (!cardTicking) {
+                    requestAnimationFrame(() => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        card.style.setProperty('--mouse-x', `${x}px`);
+                        card.style.setProperty('--mouse-y', `${y}px`);
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -4; 
+                        const rotateY = ((x - centerX) / centerX) * 4;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                        cardTicking = false;
+                    });
+                    cardTicking = true;
+                }
+            });
+
+            card.addEventListener('mouseenter', () => {
+                videoContainer.classList.add('active');
+                card.style.transition = 'transform 0.1s linear, background 0.5s, border-color 0.5s';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                videoContainer.classList.remove('active');
+                card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.setProperty('--mouse-x', `-1000px`);
+                card.style.setProperty('--mouse-y', `-1000px`);
+            });
         });
-
-        card.addEventListener('mouseenter', () => {
-            videoContainer.classList.add('active');
-            // reset transition for smooth tracking
-            card.style.transition = 'transform 0.1s linear, background 0.5s, border-color 0.5s';
-        });
-
-        card.addEventListener('mouseleave', () => {
-            videoContainer.classList.remove('active');
-            
-            // Restablecer el card a su estado plano original
-            card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            // Esconder spotlight sutilmente fuera de matriz
-            card.style.setProperty('--mouse-x', `-1000px`);
-            card.style.setProperty('--mouse-y', `-1000px`);
-        });
-    });
+    }
 
     /* =========================================================================
        CHECKOUT MODAL LOGIC
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMsg = document.getElementById('error-message');
 
     // Abre el modal desde los botones
-    const downloadBtns = [document.getElementById('btn-download-nav'), document.getElementById('btn-download-hero')];
+    const downloadBtns = [document.getElementById('btn-download-pro')];
 
     downloadBtns.forEach(btn => {
         if (btn) {
@@ -304,46 +306,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Interacción Espacial 3D y Spotlight para la Terminal Modal ---
-    const terminalModal = document.querySelector('.terminal-modal');
-    if (terminalModal) {
-        let modalTicking = false;
+    // --- Interacción Espacial 3D y Spotlight para la Terminal Modal (solo desktop) ---
+    if (!isTouchDevice) {
+        const terminalModal = document.querySelector('.terminal-modal');
+        if (terminalModal) {
+            let modalTicking = false;
 
-        terminalModal.addEventListener('mousemove', (e) => {
-            if (!modalTicking) {
-                requestAnimationFrame(() => {
-                    const rect = terminalModal.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    terminalModal.style.setProperty('--mouse-x', `${x}px`);
-                    terminalModal.style.setProperty('--mouse-y', `${y}px`);
-                    
-                    // Ligerísimo efecto de inclinación 3D (tilt effect)
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -1.5; 
-                    const rotateY = ((x - centerX) / centerX) * 1.5;
-                    
-                    terminalModal.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-                    modalTicking = false;
-                });
-                modalTicking = true;
-            }
-        });
+            terminalModal.addEventListener('mousemove', (e) => {
+                if (!modalTicking) {
+                    requestAnimationFrame(() => {
+                        const rect = terminalModal.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        terminalModal.style.setProperty('--mouse-x', `${x}px`);
+                        terminalModal.style.setProperty('--mouse-y', `${y}px`);
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -1.5; 
+                        const rotateY = ((x - centerX) / centerX) * 1.5;
+                        
+                        terminalModal.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
+                        modalTicking = false;
+                    });
+                    modalTicking = true;
+                }
+            });
 
-        terminalModal.addEventListener('mouseenter', () => {
-             terminalModal.style.transition = 'transform 0.1s linear, background 0.5s, border-color 0.5s';
-        });
+            terminalModal.addEventListener('mouseenter', () => {
+                 terminalModal.style.transition = 'transform 0.1s linear, background 0.5s, border-color 0.5s';
+            });
 
-        terminalModal.addEventListener('mouseleave', () => {
-            // Regrésalo a estado plano cuando el mousse sale
-            terminalModal.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-            terminalModal.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            // Ocultar la luz en coordenadas lejanas
-            terminalModal.style.setProperty('--mouse-x', `-1000px`);
-            terminalModal.style.setProperty('--mouse-y', `-1000px`);
-        });
+            terminalModal.addEventListener('mouseleave', () => {
+                terminalModal.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                terminalModal.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                terminalModal.style.setProperty('--mouse-x', `-1000px`);
+                terminalModal.style.setProperty('--mouse-y', `-1000px`);
+            });
+        }
     }
 
     /* =========================================================================
@@ -364,7 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Cerrar y detener el video (AHORA ES GLOBAL Y LLAMADO DESDE HTML DIRECTAMENTE Y DESDE JS)
     window.closeVideoModal = () => {
         const vidModal = document.getElementById('video-modal');
         const featurePlayer = document.getElementById('feature-video-player');
@@ -375,4 +375,44 @@ document.addEventListener('DOMContentLoaded', () => {
             featurePlayer.setAttribute('src', '');
         }
     };
+
+    /* =========================================================================
+       SPLINE 3D LAZY LOADER (IntersectionObserver)
+       Solo carga el runtime 3D cuando la sección es visible.
+       En móvil, no se carga nunca (ahorra ~4MB de JS + GPU).
+       ========================================================================= */
+    const splineContainer = document.getElementById('spline-container');
+    if (splineContainer) {
+        if (isMobile) {
+            // En móvil: deja el div vacío o muestra un gradiente estático
+            splineContainer.style.background = 'radial-gradient(ellipse at center, rgba(255,0,55,0.08) 0%, transparent 70%)';
+        } else {
+            // En desktop: carga Spline cuando la sección sea visible
+            let splineLoaded = false;
+            const splineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !splineLoaded) {
+                        splineLoaded = true;
+                        const url = splineContainer.dataset.splineUrl;
+                        // Cargar el runtime de Spline dinámicamente
+                        const script = document.createElement('script');
+                        script.type = 'module';
+                        script.src = 'https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js';
+                        script.onload = () => {
+                            // Crear el viewer una vez que el script esté listo
+                            const viewer = document.createElement('spline-viewer');
+                            viewer.setAttribute('url', url);
+                            viewer.style.width = '100%';
+                            viewer.style.height = '100%';
+                            splineContainer.appendChild(viewer);
+                        };
+                        document.head.appendChild(script);
+                        splineObserver.disconnect();
+                    }
+                });
+            }, { rootMargin: '200px' }); // Pre-carga 200px antes de que sea visible
+            splineObserver.observe(splineContainer);
+        }
+    }
 });
+

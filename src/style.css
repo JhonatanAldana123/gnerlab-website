@@ -7,6 +7,7 @@
     src: url('../public/fonts/Gilroy-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
+    font-display: swap; /* Muestra texto con fallback inmediatamente */
 }
 
 @font-face {
@@ -14,6 +15,7 @@
     src: url('../public/fonts/Gilroy-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -21,6 +23,7 @@
     src: url('../public/fonts/Gilroy-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 :root {
@@ -33,10 +36,11 @@
     --color-glass-strong: rgba(255, 255, 255, 0.1);
     --font-base: 'Gilroy', sans-serif;
 
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 2rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
     --spacing-xl: 4rem;
+    --spacing-xxl: 5rem;
 
     --radius-sm: 4px;
     --radius-md: 8px;
@@ -54,8 +58,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Ocultar el cursor default para usar nuestro custom cursor */
-    cursor: none !important;
+}
+
+/* Custom cursor solo en dispositivos con mouse (desktop) */
+@media (pointer: fine) {
+    * {
+        cursor: none !important;
+    }
 }
 
 html {
@@ -99,13 +108,19 @@ body {
     left: 0;
     pointer-events: none;
     z-index: 10000;
-    /* Si el puntero del SVG no apunta exactamente a la esquina superior izquierda, podemos usar translate */
     transform-origin: top left;
     transition: scale 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Ocultar cursor custom en dispositivos táctiles (móvil) */
+@media (pointer: coarse) {
+    .custom-cursor {
+        display: none !important;
+    }
+}
+
 .custom-cursor .cursor-svg {
-    width: 32px;
+    width: 40px;
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -260,9 +275,14 @@ button,
     color: white;
     padding: 1rem 2.5rem;
     font-size: 1rem;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 0 20px rgba(255, 0, 55, 0.4);
     position: relative;
     overflow: hidden;
+}
+
+.btn-primary:active {
+    box-shadow: 0 0 10px rgba(255, 0, 55, 0.6);
 }
 
 .btn-primary::before {
@@ -280,17 +300,23 @@ button,
     transform: translateX(200%);
 }
 
+.btn-primary:hover {
+    box-shadow: 0 0 35px rgba(255, 0, 55, 0.7);
+}
+
 .btn-secondary {
     background-color: transparent;
     color: var(--color-text);
     padding: 1rem 2.5rem;
-    border: 1px solid var(--color-glass-strong);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 0 15px rgba(255, 0, 55, 0.15);
     font-size: 1rem;
 }
 
 .btn-secondary:hover {
-    border-color: var(--color-primary);
-    background-color: rgba(255, 0, 55, 0.05);
+    background-color: rgba(255, 0, 55, 0.08);
+    box-shadow: 0 0 25px rgba(255, 0, 55, 0.4);
 }
 
 .btn-primary-small {
@@ -401,11 +427,13 @@ nav {
 /* Cinematic Background Video */
 .hero-video-wrapper {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .hero-video-wrapper video {
@@ -609,8 +637,9 @@ nav {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: var(--spacing-lg);
+    /* Forzamos 4 columnas en lugar de auto-fit libre */
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);  /* Aplicamos el espaciado unificado estandarizado */
     max-width: 1440px;
     margin: 0 auto;
     position: relative;
@@ -1402,4 +1431,296 @@ html.lenis, html.lenis body {
 
 @keyframes fadeIn {
     to { opacity: 1; }
+}
+
+/* =========================================================================
+   EXACT PRICING LAYOUT (SECOND IMAGE MOCKUP)
+   ========================================================================= */
+
+.custom-glow-section {
+    position: relative;
+    padding: 10vh 5% 5vh 5%;
+    background: transparent;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.bottom-massive-glow {
+    position: absolute;
+    bottom: -15%;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    background: radial-gradient(ellipse at bottom, rgba(255, 0, 55, 0.8) 0%, rgba(200, 0, 30, 0.4) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.uppercase-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #FFFFFF !important;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    background: none;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+.exact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 3rem auto;
+    position: relative;
+    z-index: 2;
+    align-items: stretch;
+}
+
+.exact-side-card {
+    background: rgba(43, 43, 43, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.05) !important; 
+    border-radius: var(--radius-lg);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+    min-height: 520px;
+    height: 100%;
+    padding: 3rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.exact-side-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.8), 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.exact-side-title {
+    color: #FFFFFF !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 1.5rem !important;
+    letter-spacing: 0.02em;
+}
+
+.exact-side-price {
+    font-size: 3.5rem !important;
+    font-weight: 700;
+    color: #FFF;
+    display: flex;
+    align-items: baseline;
+    line-height: 1;
+    margin-bottom: 1rem !important;
+}
+
+.currency-period {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.exact-features {
+    list-style: none;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    width: 100%;
+    text-align: left;
+}
+
+.exact-features li {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #BBBBBB;
+}
+
+.exact-features li::before {
+    content: '→';
+    color: var(--color-primary);
+    margin-right: 12px;
+    font-family: monospace;
+}
+
+.exact-card-footer {
+    width: 100%;
+    margin-top: auto;
+}
+
+.exact-btn-pro {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    padding: 1.2rem;
+}
+
+.exact-pro-card {
+    background: rgba(25, 10, 10, 0.6) !important;
+    border: 3px solid var(--color-primary) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 30px rgba(255, 0, 55, 0.3) !important;
+    min-height: 580px !important;
+    position: relative;
+    overflow: visible !important;
+    padding: 4.5rem 2rem 2rem 3rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transform: scale(1.05) !important;
+}
+
+.exact-pro-card:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 0 50px rgba(255, 0, 55, 0.5) !important;
+}
+
+.exact-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: #FFF;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 6px 20px;
+    border-radius: var(--radius-pill) !important;
+    letter-spacing: 0.05em;
+    z-index: 10;
+}
+
+.exact-top {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    width: 100%;
+    text-align: left;
+}
+
+.exact-pro-title {
+    color: var(--color-primary) !important;
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    margin-bottom: 2rem !important;
+    letter-spacing: 0.05em;
+}
+
+.exact-price {
+    font-size: 4.5rem !important;
+    font-weight: 800;
+    color: #FFF;
+    display: flex;
+    align-items: baseline;
+    line-height: 1;
+    margin-bottom: 1rem !important;
+}
+
+.currency-symbol {
+    font-size: 1.8rem !important;
+    color: #A0A0A0 !important;
+    margin-right: 6px;
+    font-weight: 600;
+}
+
+.exact-desc {
+    color: #E0E0E0 !important;
+    font-size: 0.95rem !important;
+    font-weight: 400 !important;
+}
+
+.pricing-footer {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin-top: 5rem;
+}
+
+.version-info {
+    color: #FFFFFF !important;
+    font-size: 1.3rem !important;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.copyright-info {
+    color: var(--color-primary) !important;
+    font-size: 1.3rem !important;
+    font-weight: 500;
+}
+
+@media (max-width: 900px) {
+    .exact-layout {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    .empty-card {
+        display: none; /* Hide empty cards on mobile for better UX */
+    }
+    .exact-pro-card {
+        transform: scale(1) !important;
+    }
+}
+
+/* =========================================================================
+   PERFORMANCE MÓVIL (FASE 3): Reducir Drain del GPU
+   El desenfoque de fondo y las animaciones complejas ahogan la batería móvil
+   ========================================================================= */
+@media (max-width: 768px) {
+    /* 1. Navbar Glassmorphism a fondo sólido translúcido */
+    .nav-content {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(18, 18, 18, 0.95) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* 2. Tool Cards en la matriz de módulos (hay 12, es ultra-pesado hacer blur) */
+    .tool-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(22, 22, 22, 0.8) !important;
+    }
+
+    /* 3. Pricing Cards y Modales */
+    .pricing-card,
+    .modal-overlay,
+    .terminal-modal {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .modal-overlay {
+        background: rgba(10, 10, 10, 0.95) !important;
+    }
+
+    /* 4. Apagar animaciones de fondo que crujen la GPU móvil */
+    .ambient-halos {
+        opacity: 0.3 !important; /* Menos opacidad para el banding */
+        animation: none !important; /* Suspendemos rotación en floatAmbient */
+    }
+    
+    #ether-plasma {
+        animation: none !important;
+        background-size: 150% 150%; /* Gradiente estático pero visible */
+    }
+}
+
+/* =========================================================================
+   REDUCED MOTION: Respeta la preferencia del usuario
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
 }

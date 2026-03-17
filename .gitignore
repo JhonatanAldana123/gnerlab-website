@@ -13,6 +13,6 @@ dist/
 build/
 .cache/
 
-# Opcional: ignorar videos grandes si los subiste desde otra fuente y quieres ahorrar peso,
-# si este es el caso descomentar la siguiente línea
-# public/videos/*.mp4
+# Ocultar assets excesivos del repo principal para GitHub Pages
+public/downloads/*.rar
+public/videos/FILM_COTA-1.mp4

@@ -3,16 +3,24 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/icons/logo GnerLab.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GnerLab — Herramientas de diseño paramétrico de alto rendimiento para Rhinoceros. Simplifica procesos complejos con módulos automatizados e inteligentes." />
+    <meta name="theme-color" content="#2B2B2B" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="GnerLab | La Nueva Era de Herramientas Digitales" />
+    <meta property="og:description" content="Diseño paramétrico sin fricción. Módulos de alto rendimiento para Rhinoceros." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/public/icons/logo GnerLab.svg" />
     <title>GnerLab | La Nueva Era de Herramientas Digitales</title>
-    <!-- Cargamos estilos puros -->
+    <!-- Preload fuente crítica (evita FOIT) -->
+    <link rel="preload" href="./public/fonts/Gilroy-Bold.ttf" as="font" type="font/ttf" crossorigin />
+    <!-- Estilos puros -->
     <link rel="stylesheet" href="./src/style.css" />
-    <!-- Cargamos GSAP desde CDN para no requerir Node.js locales -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+    <!-- Scripts con defer: no bloquean el render del HTML -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Spline se carga dinámicamente via IntersectionObserver (lazy-load) -->
 </head>
 
 <body>
@@ -36,7 +44,7 @@
                 <a href="#" class="nav-link">Inicio</a>
                 <a href="#main-features" class="nav-link">D Generativo</a>
                 <a href="#workspace" class="nav-link">Módulos Automaticos</a>
-                <button id="btn-download-nav" class="btn-primary-small">Obtener Acceso</button>
+                <button id="btn-download-nav" class="btn-primary-small" style="font-weight: 700; font-size: 1.05rem;" onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">Descargar</button>
             </div>
         </div>
     </nav>
@@ -45,9 +53,11 @@
     <header id="hero" class="hero-section">
         <!-- Cinematic Video Background (Google Flow Style) -->
         <div class="hero-video-wrapper">
-            <video id="hero-video" autoplay loop muted playsinline>
+            <div class="video-overlay"></div>
+            <div class="video-vignette"></div>
+            <video id="hero-video" autoplay loop muted playsinline poster="">
                 <!-- VIDEO DE PRUEBA: Luego podrás cambiarlo por uno local en tu carpeta ./public/videos -->
-                <source src="./public/videos/hero-bg.mp4.mp4" type="video/mp4" />
+                <source src="./public/videos/hero-bg_COM.mp4" type="video/mp4" />
             </video>
             <div class="hero-video-overlay"></div>
             <!-- Malla paramétrica opcional de CSS pura -->
@@ -67,7 +77,7 @@
                         <span class="line-wrap"><span class="line">REDEFINE TU FORMA DE <span class="highlight-red">CREAR</span></span></span>
                     </h1>
                 </div>
-                <p class="hero-subtitle fade-up" style="margin-inline: auto; max-width: 1200px; font-size: clamp(1.3rem, 2vw, 1.8rem); line-height: 1.6; letter-spacing: 0.02em;">Diseñar no debe ser lento ni repetitivo. Simplifica procesos complejos y<br>descubre <strong style="color: #fff; font-weight: 700;">flujos de trabajo rápidos, precisos y profesionales.</strong></p>
+                <p class="hero-subtitle fade-up" style="margin-top: -1.75rem; margin-bottom: 2rem; margin-inline: auto; max-width: 1200px; font-size: clamp(1.3rem, 2vw, 1.8rem); line-height: 1.6; letter-spacing: 0.02em; color: #ffffff; position: relative; z-index: 10;">Diseñar no debe ser lento ni repetitivo. Simplifica procesos complejos y<br>descubre <strong style="color: #fff; font-weight: 700;">flujos de trabajo rápidos, precisos y profesionales.</strong></p>
             </div>
         </div>
     </header>
@@ -77,7 +87,8 @@
         <!-- Desenfoque Superior (Fusión con Hero) -->
         <div class="transition-fade" style="z-index: 20; height: 30vh; top: -15vh;"></div>
 
-        <spline-viewer url="https://prod.spline.design/8SxYOpTP-lgViu4T/scene.splinecode" style="width: 100%; height: 100%;"></spline-viewer>
+        <!-- Spline 3D: se inyecta dinámicamente solo cuando la sección es visible (lazy-load) -->
+        <div id="spline-container" data-spline-url="https://prod.spline.design/8SxYOpTP-lgViu4T/scene.splinecode" style="width: 100%; height: 100%;"></div>
 
         <!-- Capa de camuflaje para ocultar el Logo de Spline -->
         <div style="position: absolute; bottom: 12px; right: 16px; width: 140px; height: 45px; background: #0F0F0F; z-index: 50; border-radius: 12px; box-shadow: 0 0 15px 8px #0F0F0F; cursor: default;"></div>
@@ -91,7 +102,7 @@
     <section id="workspace" class="workspace-section">
         
         <!-- Contenedor Enmascarado de Auras (Dinamismo y Fusión Pura) -->
-        <div class="ambient-halos">
+        <div class="ambient-halos" style="opacity: 0.3; pointer-events: none; z-index: 1;">
             <div class="halo-top"></div>
             <div class="halo-bottom"></div>
         </div>
@@ -99,12 +110,12 @@
         <!-- Transición Cinemática Superior (Eliminada para no ocultar el texto de Características) -->
         <div class="transition-fade" style="display: none;"></div>
 
-        <div class="section-header fade-up-scroll" style="display: flex; justify-content: space-between; align-items: center; max-width: 1440px; margin: 0 auto 3rem auto; flex-wrap: wrap; gap: 1rem;">
+        <div class="section-header fade-up-scroll" style="display: flex; justify-content: space-between; align-items: center; max-width: 1440px; margin: 0 auto var(--spacing-xxl) auto; flex-wrap: wrap; gap: 1rem; position: relative; z-index: 50;">
             <h2 style="margin: 0; font-size: clamp(2rem, 3.5vw, 3rem); text-transform: uppercase;">MÓDULOS DE ALTO RENDIMIENTO</h2>
-            <div style="border: 1px solid var(--color-primary); border-radius: 9999px; padding: 6px 20px; color: var(--color-primary); font-weight: 500; font-size: 1rem;">GnerWorkspace 2.0</div>
+            <div class="pulse-badge" style="border: 1px solid var(--color-primary); border-radius: 9999px; padding: 6px 20px; color: var(--color-primary); font-weight: 500; font-size: 1rem; box-shadow: 0 0 15px rgba(255,0,55,0.3);">GnerWorkspace 2.0</div>
         </div>
 
-        <div class="grid-container">
+        <div class="grid-container" style="position: relative; z-index: 50;">
 
             <!-- Card 1: Cotas Dinámicas -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
@@ -256,12 +267,36 @@
                 </div>
             </div>
 
-        </div>
+            <!-- Card 11: Cotas Dinámicas (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/COTAS.svg" alt="Cotas" />
+                    </div>
+                    <h3>Cotas Dinámicas</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
 
-        <div style="text-align: center; margin-top: 5rem; margin-bottom: 5rem; position: relative; z-index: 10;">
-            <h2 style="font-size: clamp(3rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase;">
-                <span style="color: white; text-shadow: 0 0 30px rgba(255,255,255,0.3);">EMPIEZA A </span><span style="color: var(--color-primary); text-shadow: 0 0 30px rgba(255,0,55,0.6);">CREAR</span>
-            </h2>
+            <!-- Card 12: Matriz (Repeat) -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
+                    </div>
+                    <h3>Matriz</h3>
+                    <p>Acotado Simultaneo para Planos</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
         </div>
 
         <!-- Unified Video Preview Container (Sticky Background Video) -->
@@ -278,65 +313,77 @@
     </section>
 
     <!-- Start Creating / Pricing Section -->
-    <section id="pricing" class="pricing-section">
-        <div class="pricing-header fade-up-scroll">
-            <h2>Start Creating</h2>
-            <p>Elige tu acceso a la nueva era del modelado paramétrico.</p>
+    <section id="pricing" class="pricing-section custom-glow-section">
+        <div style="text-align: center; position: relative; z-index: 50; padding-top: 4rem; padding-bottom: 1rem;">
+            <h2 style="font-size: clamp(3rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 0.5rem;">
+                <span style="color: white; text-shadow: 0 0 30px rgba(255,255,255,0.3);">EMPIEZA A </span><span class="highlight-red">CREAR</span>
+            </h2>
+            <p style="color: #ffffff; font-size: 1.15rem; margin-top: 0.5rem; text-shadow: 0 0 15px rgba(255,255,255,0.4); font-weight: 500;">Elige tu acceso a la nueva era del modelado paramétrico</p>
         </div>
 
-        <div class="pricing-grid">
+        <div class="pricing-grid exact-layout">
 
             <!-- Tier 1: Free -->
-            <div class="pricing-card">
-                <div class="card-glow"></div>
-                <div class="pricing-top">
-                    <h3>Free</h3>
-                    <div class="price"><span>$</span>0<span>/mo</span></div>
-                    <p class="pricing-desc">Para probar el ecosistema básico.</p>
+            <div class="exact-side-card">
+                <div class="pricing-top exact-top">
+                    <h3 class="exact-side-title">Free</h3>
+                    <div class="exact-side-price"><span class="currency-symbol">¥</span>0<span class="currency-period">/mo</span></div>
+                    <p class="pricing-desc exact-desc">Para probar el ecosistema básico.</p>
                 </div>
-                <ul class="pricing-features">
+                <ul class="exact-features">
                     <li>GnerCot</li>
                     <li>GnerMap</li>
                     <li>GnerMat</li>
                 </ul>
-                <button class="btn-secondary w-full">Obtener Gratis</button>
+                <div class="exact-card-footer">
+                    <button class="btn-secondary w-full">OBTENER GRATIS</button>
+                </div>
             </div>
 
             <!-- Tier 2: Pro -->
-            <div class="pricing-card popular">
-                <div class="card-glow"></div>
-                <div class="popular-badge">MÁS POPULAR</div>
-                <div class="pricing-top">
-                    <h3>Pro</h3>
-                    <div class="price"><span>£</span>200</div>
-                    <p class="pricing-desc">Ideal para flujos de trabajo profesionales.</p>
+            <div class="pricing-card popular exact-pro-card">
+                <div class="popular-badge exact-badge">MÁS POPULAR</div>
+                <div class="pricing-top exact-top">
+                    <h3 class="exact-pro-title">Pro</h3>
+                    <div class="price exact-price"><span class="currency-symbol">¥</span>100</div>
+                    <p class="pricing-desc exact-desc">Ideal para flujos de trabajo profesionales.</p>
                 </div>
-                <ul class="pricing-features">
+                <ul class="exact-features">
                     <li>GnerCot & GnerMap & GnerMat</li>
                     <li>GnerAli</li>
                     <li>Gner Remp</li>
                     <li>GnerRep</li>
                 </ul>
-                <button class="btn-primary w-full">Acceso Pro</button>
+                <div class="exact-card-footer">
+                    <button id="btn-download-pro" class="btn-primary w-full exact-btn-pro">ACCESO PRO</button>
+                </div>
             </div>
 
             <!-- Tier 3: Ultra -->
-            <div class="pricing-card">
-                <div class="card-glow"></div>
-                <div class="pricing-top">
-                    <h3>Ultra</h3>
-                    <div class="price"><span>Premium</span></div>
-                    <p class="pricing-desc">El poder absoluto sin limitaciones.</p>
+            <div class="exact-side-card">
+                <div class="pricing-top exact-top">
+                    <h3 class="exact-side-title">Ultra</h3>
+                    <div class="exact-side-price" style="font-size: 2.2rem !important; margin-top: 1.3rem;">Premium</div>
+                    <p class="pricing-desc exact-desc" style="margin-top: 0.5rem;">El poder absoluto sin limitaciones.</p>
                 </div>
-                <ul class="pricing-features">
+                <ul class="exact-features">
                     <li>Todos los servicios Pro</li>
                     <li>Asistencia IA Avanzada</li>
                     <li>Soporte Dedicado</li>
                 </ul>
-                <button class="btn-secondary w-full btn-outline-dynamic">Contactar</button>
+                <div class="exact-card-footer">
+                    <button class="btn-secondary w-full" style="border-color: rgba(255,0,55,0.4); color: var(--color-primary);">CONTACTAR</button>
+                </div>
             </div>
 
         </div>
+
+        <div class="pricing-footer fade-up-scroll">
+            <p class="version-info">Gner V1.0_10 de marzo de 2026</p>
+            <p class="copyright-info">GnerLabs.2026©Todos los derechos reservados.</p>
+        </div>
+
+        <div class="bottom-massive-glow"></div>
     </section>
 
     <!-- Video Player Modal -->
