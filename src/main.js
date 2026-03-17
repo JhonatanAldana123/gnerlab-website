@@ -77,23 +77,28 @@ document.addEventListener('DOMContentLoaded', () => {
         touchMultiplier: 2,
     });
 
-    function raf(time) {
-        lenis.raf(time);
+    /* =========================================================================
+       GSAP ANIMATIONS & LENIS TICKER (Integración Única Anti-Lag)
+       ========================================================================= */
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        // El ticker de GSAP se usa como la única fuente de la verdad para FPS
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+    } else {
+        // Fallback en caso de que GSAP no esté definido
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
 
-    /* =========================================================================
-       GSAP ANIMATIONS: HERO & SCROLLTRIGGER (Google Flow Style)
-       ========================================================================= */
     if (typeof gsap !== 'undefined') {
-        if (typeof ScrollTrigger !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time)=>{ lenis.raf(time * 1000); });
-            gsap.ticker.lagSmoothing(0);
-        }
-
         const tl = gsap.timeline();
 
         // Entrada inicial cargada en la vista - Animación tipo Decrypt/Fade
@@ -194,6 +199,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* =========================================================================
+       LÓGICA UNIFICADA: Video EXCLUSIVAMENTE mediante botón Play ("Bot_You")
+       ========================================================================= */
+    const toolCards = document.querySelectorAll('.tool-card');
+    toolCards.forEach(card => {
+        const playBtn = card.querySelector('.module-play-btn');
+        const onclickAttr = card.getAttribute('onclick');
+        
+        if (onclickAttr && playBtn) {
+            // Elimina el evento que abría video con cliquear fuera
+            card.removeAttribute('onclick');
+            
+            // Asigna el evento exclusivamente al ícono "Play"
+            playBtn.setAttribute('onclick', onclickAttr);
+            playBtn.style.pointerEvents = 'auto'; // Permitir captar clics
+            playBtn.style.cursor = 'pointer';
+        }
+    });
+
+    /* =========================================================================
        CHECKOUT MODAL LOGIC
        ========================================================================= */
     const modal = document.getElementById('checkout-modal');
@@ -266,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 output.innerHTML += '<p class="typewriter">> SIGNATURE ACCEPTED. HTTP 200 OK.</p>';
-                output.innerHTML += '<p class="typewriter">> DECRYPTING PAYLOAD: GnerLab_Setup_Oficial_V5.rar...</p>';
+                output.innerHTML += '<p class="typewriter">> DECRYPTING PAYLOAD: GnerLab_Setup_Oficial_V8.rar...</p>';
                 document.querySelector('.terminal-modal').classList.add('glitch-active');
                 
                 setTimeout(() => {
@@ -274,8 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     output.innerHTML += '<p class="typewriter text-warning">> TRANSFERENCIA INICIADA.</p>';
                     
                     const dlLink = document.createElement('a');
-                    dlLink.href = "./public/downloads/GnerLab_Setup_Oficial_V5.rar";
-                    dlLink.download = "GnerLab_Setup_Oficial_V5.rar";
+                    dlLink.href = "./public/downloads/GnerLab_Setup_Oficial_V8.rar";
+                    dlLink.download = "GnerLab_Setup_Oficial_V8.rar";
                     document.body.appendChild(dlLink);
                     dlLink.click();
                     document.body.removeChild(dlLink);

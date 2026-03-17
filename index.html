@@ -26,7 +26,7 @@
 <body>
     <!-- Background Textures & Noise -->
     <div id="noise-overlay"></div>
-    <div id="left-bg-texture"></div>
+    <div id="grid-bg-texture"></div>
     <div id="fluid-space-overlay"></div>
 
     <!-- Custom Cursor -->
@@ -67,8 +67,11 @@
         <div class="hero-content" style="text-align: center;">
             <div class="hero-main-logo fade-up" style="margin-top: 15vh; margin-bottom: 5vh; max-width: 900px; padding-bottom: 0; margin-inline: auto; position: relative; z-index: 2;">
                 <!-- Id 'massive-logo' necesario para la animación SCROLL de GSAP -->
-                <img id="massive-logo" src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
-                    style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1) drop-shadow(0 0 25px rgba(255,255,255,0.6)) drop-shadow(0 0 50px rgba(255,255,255,0.2));" />
+                <div id="massive-logo" style="position: relative; width: 100%; will-change: transform, opacity; transform: translateZ(0);">
+                    <div style="position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%); filter: blur(50px); z-index: 1; pointer-events: none; border-radius: 50%;"></div>
+                    <img src="./public/icons/logo GnerLab.svg" alt="GnerLab Logo Main"
+                        style="width: 100%; height: auto; display: block; filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 35px rgba(255, 255, 255, 0.2)); position: relative; z-index: 2;" />
+                </div>
             </div>
             
             <div id="hero-texts" style="position: relative; z-index: 2;">
@@ -87,11 +90,11 @@
         <!-- Desenfoque Superior (Fusión con Hero) -->
         <div class="transition-fade" style="z-index: 20; height: 30vh; top: -15vh;"></div>
 
-        <!-- Spline 3D: se inyecta dinámicamente solo cuando la sección es visible (lazy-load) -->
-        <div id="spline-container" data-spline-url="https://prod.spline.design/8SxYOpTP-lgViu4T/scene.splinecode" style="width: 100%; height: 100%;"></div>
+        <!-- Spline 3D: se inyecta dinámicamente solo cuando la sección es visible (lazy-load). v=2 para purgar cache -->
+        <div id="spline-container" data-spline-url="https://prod.spline.design/8SxYOpTP-lgViu4T/scene.splinecode?v=2" style="width: 100%; height: 100%;"></div>
 
         <!-- Capa de camuflaje para ocultar el Logo de Spline -->
-        <div style="position: absolute; bottom: 12px; right: 16px; width: 140px; height: 45px; background: #0F0F0F; z-index: 50; border-radius: 12px; box-shadow: 0 0 15px 8px #0F0F0F; cursor: default;"></div>
+        <div style="position: absolute; bottom: 12px; right: 16px; width: 140px; height: 45px; background: #2B2B2B; z-index: 50; border-radius: 12px; box-shadow: 0 0 15px 8px #2B2B2B; cursor: default;"></div>
 
 
         <!-- Desenfoque Inferior (Fusión con Workspace) -->
@@ -101,8 +104,8 @@
     <!-- Workspace Grid Section -->
     <section id="workspace" class="workspace-section">
         
-        <!-- Contenedor Enmascarado de Auras (Dinamismo y Fusión Pura) -->
-        <div class="ambient-halos" style="opacity: 0.3; pointer-events: none; z-index: 1;">
+        <!-- Contenedor Enmascarado de Auras (Respiración del Núcleo Rojo) -->
+        <div class="ambient-halos core-respiration" style="pointer-events: none; z-index: 1;">
             <div class="halo-top"></div>
             <div class="halo-bottom"></div>
         </div>
@@ -119,6 +122,7 @@
 
             <!-- Card 1: Cotas Dinámicas -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
                         <img src="./public/icons/COTAS.svg" alt="Cotas" />
@@ -128,57 +132,26 @@
                 </div>
                 <div class="module-hover">
                     <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 2: Matriz -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
+                    
+                    <div class="hover-info">
+                        <h3 class="hover-title">GnerCot<br>ConfiCot</h3>
+                        <ul class="hover-list">
+                            <li>Distancias exactas.</li>
+                            <li>Máxima velocidad.</li>
+                            <li>Adaptado a anotación del archivo.</li>
+                        </ul>
+                        <p class="hover-desc">
+                            Acotado múltiple por objeto o grupos en <b>alto, ancho y fondo.</b> Automático en capa COTAS. Configuración de color, distancia y tamaño <b>desde Interfaz.</b>
+                        </p>
                     </div>
-                    <h3>Matriz</h3>
-                    <p>Acotado Simultaneo para Planos</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
+
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Card 3: Peso & porcentaje -->
+            <!-- Card 2: Distribución -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/PESO.svg" alt="Peso y porcentaje" />
-                    </div>
-                    <h3>Peso & porcentaje</h3>
-                    <p>Cálculo por dimensiones y densidad definida.</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Peso Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 4: Conteo -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/CONTEO_V2.svg" alt="Conteo" />
-                    </div>
-                    <h3>Conteo</h3>
-                    <p>Enumeración piezas Conteo de juegos</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Conteo Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 5: Distribución -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
                         <img src="./public/icons/REP_V2.svg" alt="Distribución" />
@@ -188,57 +161,24 @@
                 </div>
                 <div class="module-hover">
                     <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Distribución Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 6: Cotas Dinámicas (Repeat) -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/COTAS.svg" alt="Cotas" />
+                    <div class="hover-info">
+                        <h3 class="hover-title">GnerRep<br>&nbsp;</h3>
+                        <ul class="hover-list">
+                            <li>Matriz inteligente.</li>
+                            <li>Convierte polisurfaces a polilíneas.</li>
+                            <li>Modulación precisa.</li>
+                        </ul>
+                        <p class="hover-desc">
+                            Ejecuta una <b>matriz inteligente</b> de objetos y gestiona sus <b>distancias con precisión.</b> Transforma polisurfaces complejas y genera un <b>reporte detallado</b> de componentes.
+                        </p>
                     </div>
-                    <h3>Cotas Dinámicas</h3>
-                    <p>Acotado Simultaneo para Planos</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Card 7: Matriz (Repeat) -->
+            <!-- Card 3: Conteo -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
-                    </div>
-                    <h3>Matriz</h3>
-                    <p>Acotado Simultaneo para Planos</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 8: Peso & porcentaje (Repeat) -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
-                <div class="module-base">
-                    <div class="tool-icon">
-                        <img src="./public/icons/PESO.svg" alt="Peso y porcentaje" />
-                    </div>
-                    <h3>Peso & porcentaje</h3>
-                    <p>Cálculo por dimensiones y densidad definida.</p>
-                </div>
-                <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Peso Hover" class="module-hover-bg"/>
-                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
-                </div>
-            </div>
-
-            <!-- Card 9: Conteo (Repeat) -->
-            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
                         <img src="./public/icons/CONTEO_V2.svg" alt="Conteo" />
@@ -248,42 +188,78 @@
                 </div>
                 <div class="module-hover">
                     <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Conteo Hover" class="module-hover-bg"/>
+                    <div class="hover-info">
+                        <h3 class="hover-title">GnerCont<br>GnerEnu</h3>
+                        <ul class="hover-list">
+                            <li>Verificador de juegos completos.</li>
+                            <li>Aviso piezas faltantes.</li>
+                            <li>Excluye Conteo Capa COTAS.</li>
+                        </ul>
+                        <p class="hover-desc">
+                            Detecta faltantes y repeticiones correctas apartir de selección Previa. <b>Control por objeto, grupos o juego completo</b> con validación visual.
+                        </p>
+                    </div>
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Card 10: Distribución (Repeat) -->
+            <!-- Card 4: Peso & porcentaje -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
-                        <img src="./public/icons/REP_V2.svg" alt="Distribución" />
+                        <img src="./public/icons/PESO_new.svg" alt="Peso y porcentaje" />
                     </div>
-                    <h3>Distribución</h3>
-                    <p>Repetición inteligente de objeto en un espacio determinado</p>
+                    <h3>Peso & porcentaje</h3>
+                    <p>Cálculo por dimensiones y densidad definida.</p>
                 </div>
                 <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Distribución Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Peso Hover" class="module-hover-bg"/>
+                    <div class="hover-info">
+                        <h3 class="hover-title">GnerPer<br>GnerWei</h3>
+                        <ul class="hover-list">
+                            <li>Distribución inteligente.</li>
+                            <li>Análisis de peso total.</li>
+                            <li>Visualización modelada.</li>
+                        </ul>
+                        <p class="hover-desc">
+                            Obtiene volumen, estima peso y lo relaciona con área base seleccionada. Indica <b>porcentaje ocupado y peso</b> acumulado según Piezas totales.
+                        </p>
+                    </div>
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Card 11: Cotas Dinámicas (Repeat) -->
+            <!-- Card 5: Exportación -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
-                        <img src="./public/icons/COTAS.svg" alt="Cotas" />
+                        <img src="./public/icons/EXPORT_new.svg" alt="Exportación" />
                     </div>
-                    <h3>Cotas Dinámicas</h3>
-                    <p>Acotado Simultaneo para Planos</p>
+                    <h3>Exportación</h3>
+                    <p>Generación de reportes instantáneos precisos</p>
                 </div>
                 <div class="module-hover">
-                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Cotas Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Exportación Hover" class="module-hover-bg"/>
+                    <div class="hover-info">
+                        <h3 class="hover-title">GnerExpo<br>&nbsp;</h3>
+                        <ul class="hover-list">
+                            <li>Distribución inteligente.</li>
+                            <li>Análisis de peso total.</li>
+                            <li>Visualización modelada.</li>
+                        </ul>
+                        <p class="hover-desc">
+                            Repetición hasta alcanzar un <b>peso objetivo o llenar espacio definido.</b> Distribuye repeticiones según peso y dimensiones <b>automáticamente.</b>
+                        </p>
+                    </div>
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
 
-            <!-- Card 12: Matriz (Repeat) -->
+            <!-- Card 6: Matriz -->
             <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
                 <div class="module-base">
                     <div class="tool-icon">
                         <img src="./public/icons/TRANSFORM.svg" alt="Matriz" />
@@ -293,6 +269,102 @@
                 </div>
                 <div class="module-hover">
                     <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Matriz Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 7: Booleana -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/BOLEANA.svg" alt="Booleana" />
+                    </div>
+                    <h3>Base Booleana</h3>
+                    <p>Operaciones estructurales sólidas</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Booleana Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 8: Captura -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/CAPTURA.svg" alt="Captura Visual" />
+                    </div>
+                    <h3>Captura Visual</h3>
+                    <p>Extracción automatizada de vistas y renders</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Captura Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 9: Intersección -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/INTER.svg" alt="Intersección" />
+                    </div>
+                    <h3>Intersección</h3>
+                    <p>Detección exhaustiva y análisis de colisiones</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Intersección Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 10: Mapeado -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/MAPEADO.svg" alt="Mapeado Dinámico" />
+                    </div>
+                    <h3>Mapeado</h3>
+                    <p>Proyección natural de texturas en modelos 3D</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Mapeado Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 11: Materiales -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/MATERIAL.svg" alt="Materiales" />
+                    </div>
+                    <h3>Materiales</h3>
+                    <p>Asignación estructurada y realística de acabados</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Materiales Hover" class="module-hover-bg"/>
+                    <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
+                </div>
+            </div>
+
+            <!-- Card 12: Organización -->
+            <div class="tool-card" onclick="window.openVideoModal('bLIz0jGCgzU')">
+                <img src="./public/icons/001_GENERAL/Modulo_Negro_V2.svg" alt="Fondo" class="module-base-bg"/>
+                <div class="module-base">
+                    <div class="tool-icon">
+                        <img src="./public/icons/ORDEN.svg" alt="Organización" />
+                    </div>
+                    <h3>Organización</h3>
+                    <p>Ordenamiento espacial y paramétrico inteligente</p>
+                </div>
+                <div class="module-hover">
+                    <img src="./public/icons/001_GENERAL/Modulo_Rojo.svg" alt="Orden Hover" class="module-hover-bg"/>
                     <img src="./public/icons/001_GENERAL/Bot_You.svg" alt="Play Video" class="module-play-btn"/>
                 </div>
             </div>
@@ -313,9 +385,9 @@
     </section>
 
     <!-- Start Creating / Pricing Section -->
-    <section id="pricing" class="pricing-section custom-glow-section">
-        <div style="text-align: center; position: relative; z-index: 50; padding-top: 4rem; padding-bottom: 1rem;">
-            <h2 style="font-size: clamp(3rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 0.5rem;">
+    <section id="pricing" class="pricing-section custom-glow-section" style="position: relative; z-index: 100;">
+        <div style="text-align: center; position: relative; z-index: 105; padding-top: 1rem; padding-bottom: 1rem;">
+            <h2 style="font-size: clamp(3rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 0.5rem; position: relative; z-index: 110;">
                 <span style="color: white; text-shadow: 0 0 30px rgba(255,255,255,0.3);">EMPIEZA A </span><span class="highlight-red">CREAR</span>
             </h2>
             <p style="color: #ffffff; font-size: 1.15rem; margin-top: 0.5rem; text-shadow: 0 0 15px rgba(255,255,255,0.4); font-weight: 500;">Elige tu acceso a la nueva era del modelado paramétrico</p>
