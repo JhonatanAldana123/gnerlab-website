@@ -14,5 +14,5 @@ build/
 .cache/
 
 # Ocultar assets excesivos del repo principal para GitHub Pages
-public/downloads/*.rar
+# public/downloads/*.rar
 public/videos/FILM_COTA-1.mp4
