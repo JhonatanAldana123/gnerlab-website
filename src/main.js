@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setTimeout(() => {
                 output.innerHTML += '<p class="typewriter">> SIGNATURE ACCEPTED. HTTP 200 OK.</p>';
-                output.innerHTML += '<p class="typewriter">> DECRYPTING PAYLOAD: GnerLab_Setup_Oficial_V8.rar...</p>';
+                output.innerHTML += '<p class="typewriter">> DECRYPTING PAYLOAD: GnerLab_Setup_Oficial_V9.rar...</p>';
                 document.querySelector('.terminal-modal').classList.add('glitch-active');
                 
                 setTimeout(() => {
@@ -298,8 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     output.innerHTML += '<p class="typewriter text-warning">> TRANSFERENCIA INICIADA.</p>';
                     
                     const dlLink = document.createElement('a');
-                    dlLink.href = "./public/downloads/GnerLab_Setup_Oficial_V8.rar";
-                    dlLink.download = "GnerLab_Setup_Oficial_V8.rar";
+                    dlLink.href = "./public/downloads/GnerLab_Setup_Oficial_V9.rar";
+                    dlLink.download = "GnerLab_Setup_Oficial_V9.rar";
                     document.body.appendChild(dlLink);
                     dlLink.click();
                     document.body.removeChild(dlLink);
